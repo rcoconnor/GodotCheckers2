@@ -1,0 +1,198 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://obj/DarkSquare.tscn" type="PackedScene" id=1]
+[ext_resource path="res://obj/LightSquare.tscn" type="PackedScene" id=2]
+
+[node name="GameBoard" type="Node2D"]
+
+[node name="BoardSquare" type="Node2D" parent="." instance=ExtResource( 1 )]
+position = Vector2( 0, 256 )
+
+[node name="@BoardSquare@2" type="Node2D" parent="." instance=ExtResource( 2 )]
+position = Vector2( 32, 256 )
+
+[node name="@BoardSquare@3" type="Node2D" parent="." instance=ExtResource( 1 )]
+position = Vector2( 64, 256 )
+
+[node name="@BoardSquare@4" type="Node2D" parent="." instance=ExtResource( 2 )]
+position = Vector2( 96, 256 )
+
+[node name="@BoardSquare@5" type="Node2D" parent="." instance=ExtResource( 1 )]
+position = Vector2( 128, 256 )
+
+[node name="@BoardSquare@6" type="Node2D" parent="." instance=ExtResource( 2 )]
+position = Vector2( 160, 256 )
+
+[node name="@BoardSquare@7" type="Node2D" parent="." instance=ExtResource( 1 )]
+position = Vector2( 192, 256 )
+
+[node name="@BoardSquare@8" type="Node2D" parent="." instance=ExtResource( 2 )]
+position = Vector2( 224, 256 )
+
+[node name="@BoardSquare@9" type="Node2D" parent="." instance=ExtResource( 2 )]
+position = Vector2( 0, 224 )
+
+[node name="@BoardSquare@10" type="Node2D" parent="." instance=ExtResource( 1 )]
+position = Vector2( 32, 224 )
+
+[node name="@BoardSquare@11" type="Node2D" parent="." instance=ExtResource( 2 )]
+position = Vector2( 64, 224 )
+
+[node name="@BoardSquare@12" type="Node2D" parent="." instance=ExtResource( 1 )]
+position = Vector2( 96, 224 )
+
+[node name="@BoardSquare@13" type="Node2D" parent="." instance=ExtResource( 2 )]
+position = Vector2( 128, 224 )
+
+[node name="@BoardSquare@14" type="Node2D" parent="." instance=ExtResource( 1 )]
+position = Vector2( 160, 224 )
+
+[node name="@BoardSquare@15" type="Node2D" parent="." instance=ExtResource( 2 )]
+position = Vector2( 192, 224 )
+
+[node name="@BoardSquare@16" type="Node2D" parent="." instance=ExtResource( 1 )]
+position = Vector2( 224, 224 )
+
+[node name="@BoardSquare@17" type="Node2D" parent="." instance=ExtResource( 1 )]
+position = Vector2( 0, 192 )
+
+[node name="@BoardSquare@18" type="Node2D" parent="." instance=ExtResource( 2 )]
+position = Vector2( 32, 192 )
+
+[node name="@BoardSquare@19" type="Node2D" parent="." instance=ExtResource( 1 )]
+position = Vector2( 64, 192 )
+
+[node name="@BoardSquare@20" type="Node2D" parent="." instance=ExtResource( 2 )]
+position = Vector2( 96, 192 )
+
+[node name="@BoardSquare@21" type="Node2D" parent="." instance=ExtResource( 1 )]
+position = Vector2( 128, 192 )
+
+[node name="@BoardSquare@22" type="Node2D" parent="." instance=ExtResource( 2 )]
+position = Vector2( 160, 192 )
+
+[node name="@BoardSquare@23" type="Node2D" parent="." instance=ExtResource( 1 )]
+position = Vector2( 192, 192 )
+
+[node name="@BoardSquare@24" type="Node2D" parent="." instance=ExtResource( 2 )]
+position = Vector2( 224, 192 )
+
+[node name="@BoardSquare@25" type="Node2D" parent="." instance=ExtResource( 2 )]
+position = Vector2( 0, 160 )
+
+[node name="@BoardSquare@26" type="Node2D" parent="." instance=ExtResource( 1 )]
+position = Vector2( 32, 160 )
+
+[node name="@BoardSquare@27" type="Node2D" parent="." instance=ExtResource( 2 )]
+position = Vector2( 64, 160 )
+
+[node name="@BoardSquare@28" type="Node2D" parent="." instance=ExtResource( 1 )]
+position = Vector2( 96, 160 )
+
+[node name="@BoardSquare@29" type="Node2D" parent="." instance=ExtResource( 2 )]
+position = Vector2( 128, 160 )
+
+[node name="@BoardSquare@30" type="Node2D" parent="." instance=ExtResource( 1 )]
+position = Vector2( 160, 160 )
+
+[node name="@BoardSquare@31" type="Node2D" parent="." instance=ExtResource( 2 )]
+position = Vector2( 192, 160 )
+
+[node name="@BoardSquare@32" type="Node2D" parent="." instance=ExtResource( 1 )]
+position = Vector2( 224, 160 )
+
+[node name="@BoardSquare@33" type="Node2D" parent="." instance=ExtResource( 1 )]
+position = Vector2( 0, 128 )
+
+[node name="@BoardSquare@34" type="Node2D" parent="." instance=ExtResource( 2 )]
+position = Vector2( 32, 128 )
+
+[node name="@BoardSquare@35" type="Node2D" parent="." instance=ExtResource( 1 )]
+position = Vector2( 64, 128 )
+
+[node name="@BoardSquare@36" type="Node2D" parent="." instance=ExtResource( 2 )]
+position = Vector2( 96, 128 )
+
+[node name="@BoardSquare@37" type="Node2D" parent="." instance=ExtResource( 1 )]
+position = Vector2( 128, 128 )
+
+[node name="@BoardSquare@38" type="Node2D" parent="." instance=ExtResource( 2 )]
+position = Vector2( 160, 128 )
+
+[node name="@BoardSquare@39" type="Node2D" parent="." instance=ExtResource( 1 )]
+position = Vector2( 192, 128 )
+
+[node name="@BoardSquare@40" type="Node2D" parent="." instance=ExtResource( 2 )]
+position = Vector2( 224, 128 )
+
+[node name="@BoardSquare@41" type="Node2D" parent="." instance=ExtResource( 2 )]
+position = Vector2( 0, 96 )
+
+[node name="@BoardSquare@42" type="Node2D" parent="." instance=ExtResource( 1 )]
+position = Vector2( 32, 96 )
+
+[node name="@BoardSquare@43" type="Node2D" parent="." instance=ExtResource( 2 )]
+position = Vector2( 64, 96 )
+
+[node name="@BoardSquare@44" type="Node2D" parent="." instance=ExtResource( 1 )]
+position = Vector2( 96, 96 )
+
+[node name="@BoardSquare@45" type="Node2D" parent="." instance=ExtResource( 2 )]
+position = Vector2( 128, 96 )
+
+[node name="@BoardSquare@46" type="Node2D" parent="." instance=ExtResource( 1 )]
+position = Vector2( 160, 96 )
+
+[node name="@BoardSquare@47" type="Node2D" parent="." instance=ExtResource( 2 )]
+position = Vector2( 192, 96 )
+
+[node name="@BoardSquare@48" type="Node2D" parent="." instance=ExtResource( 1 )]
+position = Vector2( 224, 96 )
+
+[node name="@BoardSquare@49" type="Node2D" parent="." instance=ExtResource( 1 )]
+position = Vector2( 0, 64 )
+
+[node name="@BoardSquare@50" type="Node2D" parent="." instance=ExtResource( 2 )]
+position = Vector2( 32, 64 )
+
+[node name="@BoardSquare@51" type="Node2D" parent="." instance=ExtResource( 1 )]
+position = Vector2( 64, 64 )
+
+[node name="@BoardSquare@52" type="Node2D" parent="." instance=ExtResource( 2 )]
+position = Vector2( 96, 64 )
+
+[node name="@BoardSquare@53" type="Node2D" parent="." instance=ExtResource( 1 )]
+position = Vector2( 128, 64 )
+
+[node name="@BoardSquare@54" type="Node2D" parent="." instance=ExtResource( 2 )]
+position = Vector2( 160, 64 )
+
+[node name="@BoardSquare@55" type="Node2D" parent="." instance=ExtResource( 1 )]
+position = Vector2( 192, 64 )
+
+[node name="@BoardSquare@56" type="Node2D" parent="." instance=ExtResource( 2 )]
+position = Vector2( 224, 64 )
+
+[node name="@BoardSquare@57" type="Node2D" parent="." instance=ExtResource( 2 )]
+position = Vector2( 0, 32 )
+
+[node name="@BoardSquare@58" type="Node2D" parent="." instance=ExtResource( 1 )]
+position = Vector2( 32, 32 )
+
+[node name="@BoardSquare@59" type="Node2D" parent="." instance=ExtResource( 2 )]
+position = Vector2( 64, 32 )
+
+[node name="@BoardSquare@60" type="Node2D" parent="." instance=ExtResource( 1 )]
+position = Vector2( 96, 32 )
+
+[node name="@BoardSquare@61" type="Node2D" parent="." instance=ExtResource( 2 )]
+position = Vector2( 128, 32 )
+
+[node name="@BoardSquare@62" type="Node2D" parent="." instance=ExtResource( 1 )]
+position = Vector2( 160, 32 )
+
+[node name="@BoardSquare@63" type="Node2D" parent="." instance=ExtResource( 2 )]
+position = Vector2( 192, 32 )
+
+[node name="@BoardSquare@64" type="Node2D" parent="." instance=ExtResource( 1 )]
+position = Vector2( 224, 32 )
