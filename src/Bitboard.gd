@@ -49,7 +49,9 @@ func shift_left():
         msb = true
     board_state = ( board_state << 1 ) & CLEAR_SIGN_BIT
 
-# sets the state 
+# sets the state
+#   new_msb: boolean representing the msb
+#   new_state: 63 bit number representing the baord state
 func set_state(new_msb, new_state):
     msb = new_msb
     board_state = ( new_state & CLEAR_SIGN_BIT ) # ensure that the sign bit is not set
@@ -88,6 +90,8 @@ func convert_num_to_hex_string(num):
     return string_to_return 
 
 
+func get_lsb(): 
+    return board_state & 1
 
 func get_msb(): 
     return msb

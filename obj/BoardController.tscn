@@ -2,7 +2,7 @@
 
 [ext_resource path="res://src/BoardController.gd" type="Script" id=1]
 [ext_resource path="res://obj/Gameboard.tscn" type="PackedScene" id=2]
-[ext_resource path="res://obj/Piece.tscn" type="PackedScene" id=3]
+[ext_resource path="res://obj/PieceManager.tscn" type="PackedScene" id=3]
 
 [node name="BoardController" type="Node2D"]
 position = Vector2( 94.2793, 62.1386 )
@@ -10,4 +10,4 @@ script = ExtResource( 1 )
 
 [node name="GameBoard" parent="." instance=ExtResource( 2 )]
 
-[node name="Piece" parent="." instance=ExtResource( 3 )]
+[node name="PieceManager" parent="." instance=ExtResource( 3 )]
