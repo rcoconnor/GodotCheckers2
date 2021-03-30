@@ -1,18 +1,19 @@
-[gd_scene load_steps=6 format=2]
+[gd_scene load_steps=8 format=2]
 
 [ext_resource path="res://img/wood.png" type="Texture" id=1]
+[ext_resource path="res://src/ClickableSprite.gd" type="Script" id=2]
 
 [sub_resource type="AtlasTexture" id=1]
 flags = 4
 atlas = ExtResource( 1 )
 region = Rect2( 0, 0, 32, 32 )
 
-[sub_resource type="AtlasTexture" id=5]
+[sub_resource type="AtlasTexture" id=2]
 flags = 4
 atlas = ExtResource( 1 )
 region = Rect2( 0, 64, 32, 32 )
 
-[sub_resource type="AtlasTexture" id=6]
+[sub_resource type="AtlasTexture" id=3]
 flags = 4
 atlas = ExtResource( 1 )
 region = Rect2( 0, 32, 32, 32 )
@@ -24,19 +25,30 @@ animations = [ {
 "name": "Light",
 "speed": 1.0
 }, {
-"frames": [ SubResource( 5 ) ],
+"frames": [ SubResource( 2 ) ],
 "loop": false,
 "name": "Dark",
 "speed": 1.0
 }, {
-"frames": [ SubResource( 6 ) ],
+"frames": [ SubResource( 3 ) ],
 "loop": false,
 "name": "Medium",
 "speed": 1.0
 } ]
 
+[sub_resource type="RectangleShape2D" id=5]
+extents = Vector2( 15.7319, 15.5645 )
+
 [node name="BoardSquare" type="Node2D"]
+script = ExtResource( 2 )
 
 [node name="AnimatedSprite" type="AnimatedSprite" parent="."]
 frames = SubResource( 4 )
 animation = "Dark"
+
+[node name="Area2D" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+shape = SubResource( 5 )
+[connection signal="mouse_entered" from="Area2D" to="." method="_on_mouse_entered"]
+[connection signal="mouse_exited" from="Area2D" to="." method="_on_mouse_exit"]

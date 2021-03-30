@@ -1,9 +1,6 @@
 extends Node2D
 
-
-# Declare member variables here. Examples:
-# var a = 2
-# var b = "text"
+signal piece_selected(piece) 
 
 var mouse_is_over_collider = false
 var is_target = false
@@ -19,24 +16,25 @@ export(int) var speed = 500
 func _process(_delta): 
     pass 
 
+
+func set_new_global_pos(new_pos):
+    set_global_position(new_pos)
+
+
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _physics_process(_delta):
-    if (is_target):
-        var vec = get_viewport().get_mouse_position() #- self.position
+    pass
+    #if (is_target):
+        #var vec = get_viewport().get_mouse_position() #- self.position
         #vec = vec.normalized() * delta * speed
-        set_global_position(vec) 
+        #set_global_position(vec) 
 
 
 func _input(event): 
     if event.is_action_pressed("Left Click"):
-        if is_target == false: 
-            if mouse_is_over_collider:
-                is_target = true
-                old_pos = position
-        else: 
-            is_target = false
-            set_position(old_pos) 
-
+        if mouse_is_over_collider:
+            old_pos = position
+            emit_signal("piece_selected", self)
 
 func _on_mouse_entered(): 
     mouse_is_over_collider = true
