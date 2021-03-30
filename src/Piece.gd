@@ -30,6 +30,12 @@ func _physics_process(_delta):
         #set_global_position(vec) 
 
 
+func get_rank(): 
+    return (position.x / 32)
+
+func get_file(): 
+    return (7 - (position.y / 32))
+
 func _input(event): 
     if event.is_action_pressed("Left Click"):
         if mouse_is_over_collider:

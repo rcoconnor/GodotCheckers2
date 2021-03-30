@@ -9,12 +9,15 @@ export(PackedScene) var DarkPiece
 var dark_piece_state = Bitboard.new()
 var light_piece_state = Bitboard.new()
 
+
 # Member variables
 var pieces_array = Array()
 
 
 # important constants
 const SPRITE_SIZE = 32
+
+signal refreshed_screen
 
 func _ready():
     dark_piece_state.set_state(false, 0x000000000055AA55)
@@ -26,7 +29,8 @@ func _process(_delta):
 
 
 func clear_board(): 
-    for each_piece in pieces_array: 
+    for each_piece in pieces_array:
+        remove_child(each_piece)
         each_piece.queue_free()
     pieces_array = Array()
 
@@ -35,9 +39,7 @@ func refresh_board():
     clear_board()
     instance_pieces(DarkPiece, dark_piece_state)
     instance_pieces(LightPiece, light_piece_state)
-
-
-
+    emit_signal("refreshed_screen") 
 
 
 func instance_pieces(node_to_instance, state): 
@@ -53,7 +55,6 @@ func instance_pieces(node_to_instance, state):
                 new_piece.set_owner(self)
                 pieces_array.append(new_piece)
             temp_board.shift_right()
-        
         
 
 

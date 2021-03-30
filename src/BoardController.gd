@@ -1,13 +1,15 @@
 extends Node2D
 
 #const Bitboard = preload("res://src/Bitboard.gd")
-#const BoardFunctions = preload("res://src/BitboardFunctions.gd")
+const BoardFunctions = preload("res://src/BitboardFunctions.gd")
 
 const ClickableSprite = preload("res://src/ClickableSprite.gd")
 const Piece = preload("res://src/Piece.gd")
 
 #var DarkSquare = preload("res://obj/DarkSquare.tscn") 
 #var LightSquare = preload("res://obj/LightSquare.tscn")
+
+const Lookup = preload("res://src/LookupTables.gd")
 
 
 var DarkPiece = preload("res://obj/DarkPiece.tscn") 
@@ -17,16 +19,20 @@ var target_piece = Node2D
 var has_target = false
 var original_pos = Vector2()
 var should_move = false
+
+var board_functions
+var index = 0
 # Called when the node enters the scene tree for the first time.
 func _ready():
+    #var lookup = Lookup.new()
+    #print("looup: ", lookup.CLEAR_RANK[0].to_string())
+    board_functions = BoardFunctions.new()
+    print("BoardController: ", board_functions.CLEAR_RANK[1].to_string())
     has_target = false
     for each_child in $GameBoard.get_children(): 
         if each_child is ClickableSprite: 
             each_child.connect("selected", self, "selected_signal_received")
 
-    for each_child in $PieceManager.get_children(): 
-        if each_child is Piece: 
-            each_child.connect("piece_selected", self, "select_piece_received")
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(_delta):
@@ -36,6 +42,11 @@ func _process(_delta):
         #target_piece.set_new_global_position(mouse_pos)
 
 func _input(event):
+    if event.is_action_pressed("ui_accept"):  # space bar
+        $PieceManager.clear_board()
+        #print("rank 0: ", lookup.CLEAR_RANK)
+        $PieceManager.instance_pieces($PieceManager.DarkPiece, board_functions.CLEAR_FILE[index])
+        index+=1
     if(event.is_action_pressed("Left Click")): 
         pass 
         #   if (event.is_action_pressed("Left Click")): 
@@ -55,14 +66,18 @@ func select_piece_received(node):
     pass
 
 
-func selected_signal_received(x_val, y_val): 
+func _on_pieces_refreshed_screen(): 
+    for each_child in $PieceManager.get_children(): 
+        if each_child is Piece: 
+            each_child.connect("piece_selected", self, "select_piece_received")
+
+# called when a square has been clicked 
+func selected_signal_received(square_rank, square_file): 
     if (has_target):
-        if (target_piece.position.x != x_val && target_piece.position.y): 
-            print("received the signal")
-            print("targetx: ", target_piece.position.x)
-            print("targety: ", target_piece.position.y)
-            print("x: ", x_val)
-            print("y: ", y_val)
+        if (target_piece.get_rank() != square_rank && target_piece.get_file() != square_file): 
+            has_target = false
+            $PieceManager.refresh_board()
+
 
 #const SQUARE_SIZE = 32
 
