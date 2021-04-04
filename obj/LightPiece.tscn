@@ -1,7 +1,7 @@
 [gd_scene load_steps=7 format=2]
 
 [ext_resource path="res://img/checker.png" type="Texture" id=1]
-[ext_resource path="res://src/Piece.gd" type="Script" id=2]
+[ext_resource path="res://src/LightPiece.gd" type="Script" id=2]
 
 [sub_resource type="AtlasTexture" id=1]
 flags = 4
@@ -29,7 +29,7 @@ animations = [ {
 [sub_resource type="CircleShape2D" id=4]
 radius = 14.7435
 
-[node name="Piece" type="Node2D"]
+[node name="LightPiece" type="Node2D"]
 z_index = 1
 script = ExtResource( 2 )
 

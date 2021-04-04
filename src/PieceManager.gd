@@ -1,7 +1,9 @@
 extends Node2D
 
 const Bitboard = preload("res://src/Bitboard.gd")
-const BoardFunctions = preload("res://src/Bitboard.gd")
+const BoardFunctions = preload("res://src/BitboardFunctions.gd")
+
+var board_functions
 
 export(PackedScene) var LightPiece
 export(PackedScene) var DarkPiece
@@ -20,6 +22,7 @@ const SPRITE_SIZE = 32
 signal refreshed_screen
 
 func _ready():
+    board_functions = BoardFunctions.new()
     dark_piece_state.set_state(false, 0x000000000055AA55)
     light_piece_state.set_state(true, 0x2A55AA0000000000)
     refresh_board()
@@ -28,6 +31,22 @@ func _process(_delta):
     pass
 
 
+
+func move_pieces(from_rank, from_file, to_rank, to_file, is_white_piece): 
+    var new_index: int = ( to_rank * 8 ) + to_file
+    var old_index: int = (from_rank * 8) + from_file
+    
+    var not_old_piece = BoardFunctions.LOGICAL_NOT(board_functions.PIECE_TABLE[old_index])
+    var new_piece = board_functions.PIECE_TABLE[new_index]
+    
+    if is_white_piece: 
+        var old_without_piece = BoardFunctions.LOGICAL_AND(light_piece_state, not_old_piece)
+        var new_light_pieces = BoardFunctions.LOGICAL_OR(old_without_piece, new_piece)
+        set_light_piece_state(new_light_pieces)
+    else: 
+        var old_without_piece = BoardFunctions.LOGICAL_AND(dark_piece_state, not_old_piece)
+        var new_dark_pieces = BoardFunctions.LOGICAL_OR(old_without_piece, new_piece)
+        set_dark_piece_state(new_dark_pieces)
 func clear_board(): 
     for each_piece in pieces_array:
         remove_child(each_piece)
@@ -64,3 +83,13 @@ func set_dark_piece_state(new_state):
 
 func get_dark_piece_state(): 
     return dark_piece_state
+
+func set_light_piece_state(new_state): 
+    light_piece_state = new_state
+
+func get_light_piece_state(): 
+    return light_piece_state
+
+
+
+

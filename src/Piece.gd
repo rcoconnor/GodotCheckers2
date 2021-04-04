@@ -56,11 +56,17 @@ func _physics_process(_delta):
 
 
 func compute_is_valid_move(new_rank, new_file, own_side_bitboard):
+    # get the bitboard representation of the board the player would like to make
+    print("dark piece calling!")
     var new_index: int = (8 * new_rank) + new_file
     var shifted_piece_table = bitboardFunctions.PIECE_TABLE[new_index]
     #print("shifted: ", shifted_piece_table.to_string())
+    
+    # Get the valid moves from the targets current position 
     var valid_moves = compute_piece_valid_moves(new_rank, new_file, own_side_bitboard)
     #print('valid  : ', valid_moves.to_string())
+
+    # Determine if the move is a valid move 
     var is_valid = BoardFunctions.multiple_shift_right(BoardFunctions.LOGICAL_AND(shifted_piece_table, valid_moves), new_index)
     #print("isvalid: ", is_valid.to_string())
     if is_valid.get_board_state() == 1 && is_valid.get_msb() == false: 
@@ -82,9 +88,9 @@ func compute_piece_valid_moves(new_rank, new_file, own_side_bitboard):
 #   print("piece_index: ", piece_index)
     
     var piece_clip_file_h = BoardFunctions.LOGICAL_AND(piece_loc_bitboard, bitboardFunctions.CLEAR_FILE[7])
-    #var king_flip_file_a = BoardFunctions.LOGICAL_AND(king_loc_bitboard, BoardFunctions.CLEAR_FILE[0])
+    var piece_clip_file_a = BoardFunctions.LOGICAL_AND(piece_loc_bitboard, bitboardFunctions.CLEAR_FILE[0])
     #print("clip h: ", piece_clip_file_h.to_string()) 
-    var left_spot = BoardFunctions.multiple_shift_left(piece_clip_file_h, 7)
+    var left_spot = BoardFunctions.multiple_shift_left(piece_clip_file_a, 7)
     #print("left  : ", left_spot.to_string()) 
     var right_spot = BoardFunctions.multiple_shift_left(piece_clip_file_h, 9)
     #print("right : ", right_spot.to_string())
