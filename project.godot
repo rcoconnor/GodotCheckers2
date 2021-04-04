@@ -13,15 +13,9 @@ _global_script_classes=[ {
 "class": "Bitboard",
 "language": "GDScript",
 "path": "res://src/Bitboard.gd"
-}, {
-"base": "Node2D",
-"class": "ClickableSprite",
-"language": "GDScript",
-"path": "res://src/ClickableSprite.gd"
 } ]
 _global_script_class_icons={
-"Bitboard": "",
-"ClickableSprite": ""
+"Bitboard": ""
 }
 
 [application]

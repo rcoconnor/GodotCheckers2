@@ -50,11 +50,12 @@ func instance_pieces(node_to_instance, state):
             #print("getLSB: ", temp_board.get_lsb())
             if (temp_board.get_lsb() == 1): 
                 var new_piece = node_to_instance.instance()
-                new_piece.position = Vector2(file * new_piece.scale.x * SPRITE_SIZE, (7-rank) * new_piece.scale.y * SPRITE_SIZE)
                 add_child(new_piece)
                 new_piece.set_owner(self)
                 pieces_array.append(new_piece)
+                new_piece.set_file(file)
+                new_piece.set_rank(rank)
             temp_board.shift_right()
-        
 
-
+func get_dark_piece_state(): 
+    return dark_piece_state

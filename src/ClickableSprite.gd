@@ -10,8 +10,8 @@ var rank = 0
 var file = 0
 
 func _ready(): 
-    rank = position.x / 32
-    file = 7 - ( position.y / 32 )
+    file = position.x / 32
+    rank = 7 - ( position.y / 32 )
 
 func _input(event): 
     if (event.is_action_pressed("Left Click")): 
@@ -23,5 +23,9 @@ func _on_mouse_entered():
 
 func _on_mouse_exit():
     mouse_is_over_collider = false
+
+
+func highlight_square(): 
+    $AnimatedSprite.play("Medium")
 
 

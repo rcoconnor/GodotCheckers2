@@ -22,6 +22,9 @@ var should_move = false
 
 var board_functions
 var index = 0
+
+#var move_to_show = null
+
 # Called when the node enters the scene tree for the first time.
 func _ready():
     #var lookup = Lookup.new()
@@ -40,13 +43,15 @@ func _process(_delta):
         var mouse_pos = get_viewport().get_mouse_position()
         target_piece.set_new_global_pos(mouse_pos)
         #target_piece.set_new_global_position(mouse_pos)
+        
 
 func _input(event):
     if event.is_action_pressed("ui_accept"):  # space bar
         $PieceManager.clear_board()
         #print("rank 0: ", lookup.CLEAR_RANK)
-        $PieceManager.instance_pieces($PieceManager.DarkPiece, board_functions.CLEAR_FILE[index])
-        index+=1
+        #$PieceManager.instance_pieces($PieceManager.DarkPiece, board_functions.MASK_FILE[index])
+        #if (move_to_show != null): 
+            #$PieceManager.instance_pieces($PieceManager.DarkPiece, move_to_show)
     if(event.is_action_pressed("Left Click")): 
         pass 
         #   if (event.is_action_pressed("Left Click")): 
@@ -56,9 +61,11 @@ func _input(event):
 #           target_piece.set_new_global_pos(original_pos)
 #           has_target = false
 
-        
+
 func select_piece_received(node):
-    print("the piece has been received")
+#   print("the piece has been received")
+#   print("rank: ", node.get_rank())
+#   print("file: ", node.get_file())
     if (has_target == false): 
         original_pos = node.global_position
         has_target = true
@@ -73,10 +80,18 @@ func _on_pieces_refreshed_screen():
 
 # called when a square has been clicked 
 func selected_signal_received(square_rank, square_file): 
+    #   print("a square has been clicked")
     if (has_target):
-        if (target_piece.get_rank() != square_rank && target_piece.get_file() != square_file): 
-            has_target = false
-            $PieceManager.refresh_board()
+        if (target_piece.get_rank() != square_rank && target_piece.get_file() != square_file):
+            var is_valid_move = target_piece.compute_is_valid_move(square_rank, square_file, $PieceManager.get_dark_piece_state())
+            #move_to_show = valid_moves
+            print("is_valid: ", is_valid_move)
+            if(is_valid_move): 
+                has_target = false
+                $PieceManager.refresh_board()
+            else:
+                has_target = false
+                $PieceManager.refresh_board()
 
 
 #const SQUARE_SIZE = 32

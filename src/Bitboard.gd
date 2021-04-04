@@ -31,6 +31,7 @@ func _ready():
 func _update(_delta): 
     pass
 
+
 func shift_right():
     board_state = ( board_state >> 1 ) & CLEAR_SIGN_BIT
     if (msb): 
