@@ -87,6 +87,18 @@ func selected_signal_received(square_rank, square_file):
             #move_to_show = valid_moves
             print("is_valid: ", is_valid_move)
             if(is_valid_move): 
+                var new_index: int = ( square_rank * 8 ) + square_file
+                var old_index: int = (target_piece.get_rank() * 8) + target_piece.get_file()
+                
+                # invert the bitboard so we can clear the old position from the board
+                var not_old_piece = BoardFunctions.LOGICAL_NOT(board_functions.PIECE_TABLE[old_index])
+                var new_piece = board_functions.PIECE_TABLE[new_index]
+                
+                # clear the old piece from the board by AND'ing it's complement with the board 
+                var old_without_piece = BoardFunctions.LOGICAL_AND($PieceManager.get_dark_piece_state(), not_old_piece)
+                # OR the board with the new pieces position to place it in the board
+                var new_dark_pieces = BoardFunctions.LOGICAL_OR(old_without_piece, new_piece)
+                $PieceManager.set_dark_piece_state(new_dark_pieces)
                 has_target = false
                 $PieceManager.refresh_board()
             else:

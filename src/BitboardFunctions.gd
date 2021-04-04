@@ -161,4 +161,11 @@ static func LOGICAL_NOT(bitboard):
     #print("    new board: ", new_board.to_string())
     return new_board
 
+static func copy_bitboard(board_to_copy): 
+    var board_to_return = Bitboard.new()
+    var new_msb = board_to_copy.get_msb()
+    var new_state = board_to_copy.get_board_state()
+    board_to_return.set_state(new_msb, new_state)
+    return board_to_return
+
 

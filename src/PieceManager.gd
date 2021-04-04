@@ -57,5 +57,10 @@ func instance_pieces(node_to_instance, state):
                 new_piece.set_rank(rank)
             temp_board.shift_right()
 
+func set_dark_piece_state(new_state): 
+    print("old state: ", dark_piece_state.to_string())
+    dark_piece_state = new_state
+    print("new_state: ", dark_piece_state.to_string())
+
 func get_dark_piece_state(): 
     return dark_piece_state
