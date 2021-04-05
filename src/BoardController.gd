@@ -6,6 +6,7 @@ const BoardFunctions = preload("res://src/BitboardFunctions.gd")
 const ClickableSprite = preload("res://src/ClickableSprite.gd")
 const Piece = preload("res://src/Piece.gd")
 const LightPiece = preload("res://src/LightPiece.gd")
+const DarkPiece = preload("res://src/DarkPiece.gd")
 
 #var DarkSquare = preload("res://obj/DarkSquare.tscn") 
 #var LightSquare = preload("res://obj/LightSquare.tscn")
@@ -13,7 +14,7 @@ const LightPiece = preload("res://src/LightPiece.gd")
 const Lookup = preload("res://src/LookupTables.gd")
 
 
-var DarkPiece = preload("res://obj/DarkPiece.tscn") 
+#var DarkPiece = preload("res://obj/DarkPiece.tscn") 
 #var LightPiece = preload("res://obj/LightPiece.tscn") 
 
 var target_piece = Node2D  
@@ -92,7 +93,7 @@ func selected_signal_received(square_rank, square_file):
                     $PieceManager.move_pieces(target_piece.get_rank(), target_piece.get_file(), square_rank, square_file, true)
                     has_target = false
                     $PieceManager.refresh_board()
-                else: 
+                elif target_piece is DarkPiece: 
                     $PieceManager.move_pieces(target_piece.get_rank(), target_piece.get_file(), square_rank, square_file, false)
                     has_target = false
                     $PieceManager.refresh_board()

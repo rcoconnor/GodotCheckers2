@@ -37,6 +37,8 @@ func set_file(new_file):
     var new_x = file * SPRITE_SIZE
     set_position(Vector2(new_x, position.y))
     piece_index = (8 * rank) + file
+
+
 func set_rank(new_rank): 
     rank = new_rank
     var new_y = (7 - rank ) * SPRITE_SIZE
@@ -75,6 +77,7 @@ func compute_is_valid_move(new_rank, new_file, own_side_bitboard):
         return false
 
 func compute_piece_valid_moves(new_rank, new_file, own_side_bitboard): 
+    print("COMPUTE_PIECE_VALID_MOVES SHOULD NOT BE CALLED")
     var piece_loc_bitboard = Bitboard.new()
     var new_msb = bitboardFunctions.PIECE_TABLE[piece_index].get_msb()
     var new_state = bitboardFunctions.PIECE_TABLE[piece_index].get_board_state()
