@@ -81,11 +81,12 @@ func _on_pieces_refreshed_screen():
             each_child.connect("piece_selected", self, "select_piece_received")
 
 # called when a square has been clicked 
+# square_rank: the rank of the square which has been selected 
+# square_file: the file of the square which has been selected
 func selected_signal_received(square_rank, square_file): 
-    #   print("a square has been clicked")
     if (has_target):
         if (target_piece.get_rank() != square_rank && target_piece.get_file() != square_file):
-            var is_valid_move = target_piece.compute_is_valid_move(square_rank, square_file, $PieceManager.get_dark_piece_state())
+            var is_valid_move = target_piece.compute_is_valid_move(square_rank, square_file, $PieceManager.get_dark_piece_state(), $PieceManager.get_light_piece_state())
             #move_to_show = valid_moves
             print("is_valid: ", is_valid_move)
             if(is_valid_move): 

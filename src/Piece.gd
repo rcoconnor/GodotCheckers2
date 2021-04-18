@@ -56,10 +56,14 @@ func _physics_process(_delta):
         #vec = vec.normalized() * delta * speed
         #set_global_position(vec) 
 
-
-func compute_is_valid_move(new_rank, new_file, own_side_bitboard):
+# returns whether or not a given move is legal from the current position 
+# new_rank: the rank of where we are moving 
+# new_file: the file of where we are moving 
+# own_side_bitboard: the map of all allied pieces 
+# enemy_bitboard: the map of all enemies
+func compute_is_valid_move(new_rank, new_file, own_side_bitboard, enemy_bitbaord):
     # get the bitboard representation of the board the player would like to make
-    print("dark piece calling!")
+    print('EEEEEOORRRRRROOOOOORRRRRR THIS IS AN OVERLOADED FUNCTION THIS SHOULDNT BE CALLING')
     var new_index: int = (8 * new_rank) + new_file
     var shifted_piece_table = bitboardFunctions.PIECE_TABLE[new_index]
     #print("shifted: ", shifted_piece_table.to_string())

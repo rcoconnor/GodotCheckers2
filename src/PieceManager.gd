@@ -47,6 +47,8 @@ func move_pieces(from_rank, from_file, to_rank, to_file, is_white_piece):
         var old_without_piece = BoardFunctions.LOGICAL_AND(dark_piece_state, not_old_piece)
         var new_dark_pieces = BoardFunctions.LOGICAL_OR(old_without_piece, new_piece)
         set_dark_piece_state(new_dark_pieces)
+
+# clears the board 
 func clear_board(): 
     for each_piece in pieces_array:
         remove_child(each_piece)
@@ -77,9 +79,7 @@ func instance_pieces(node_to_instance, state):
             temp_board.shift_right()
 
 func set_dark_piece_state(new_state): 
-    print("old state: ", dark_piece_state.to_string())
     dark_piece_state = new_state
-    print("new_state: ", dark_piece_state.to_string())
 
 func get_dark_piece_state(): 
     return dark_piece_state
