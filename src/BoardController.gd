@@ -13,6 +13,7 @@ const DarkPiece = preload("res://src/DarkPiece.gd")
 
 const Lookup = preload("res://src/LookupTables.gd")
 
+export(PackedScene) var HighLightSquare
 
 #var DarkPiece = preload("res://obj/DarkPiece.tscn") 
 #var LightPiece = preload("res://obj/LightPiece.tscn") 
@@ -45,7 +46,6 @@ func _process(_delta):
         var mouse_pos = get_viewport().get_mouse_position()
         target_piece.set_new_global_pos(mouse_pos)
         #target_piece.set_new_global_position(mouse_pos)
-        
 
 func _input(event):
     if event.is_action_pressed("ui_accept"):  # space bar
@@ -63,16 +63,14 @@ func _input(event):
 #           target_piece.set_new_global_pos(original_pos)
 #           has_target = false
 
-
+# called when a piece has been selected 
+# node: the node of the piece which has been selected 
 func select_piece_received(node):
-#   print("the piece has been received")
-#   print("rank: ", node.get_rank())
-#   print("file: ", node.get_file())
     if (has_target == false): 
         original_pos = node.global_position
         has_target = true
         target_piece = node
-    pass
+        highlight_valid_moves()        
 
 
 func _on_pieces_refreshed_screen(): 
@@ -80,7 +78,9 @@ func _on_pieces_refreshed_screen():
         if each_child is Piece: 
             each_child.connect("piece_selected", self, "select_piece_received")
 
-# called when a square has been clicked 
+# called when a square has been clicked, if there is a target piece and the 
+# selected square is a valid move, this method will update the board 
+# accordingly
 # square_rank: the rank of the square which has been selected 
 # square_file: the file of the square which has been selected
 func selected_signal_received(square_rank, square_file): 
@@ -88,7 +88,6 @@ func selected_signal_received(square_rank, square_file):
         if (target_piece.get_rank() != square_rank && target_piece.get_file() != square_file):
             var is_valid_move = target_piece.compute_is_valid_move(square_rank, square_file, $PieceManager.get_dark_piece_state(), $PieceManager.get_light_piece_state())
             #move_to_show = valid_moves
-            print("is_valid: ", is_valid_move)
             if(is_valid_move): 
                 if target_piece is LightPiece: 
                     $PieceManager.move_pieces(target_piece.get_rank(), target_piece.get_file(), square_rank, square_file, true)
@@ -98,12 +97,33 @@ func selected_signal_received(square_rank, square_file):
                     $PieceManager.move_pieces(target_piece.get_rank(), target_piece.get_file(), square_rank, square_file, false)
                     has_target = false
                     $PieceManager.refresh_board()
+            # un-highlight all the valid moves 
             else:
                 has_target = false
                 $PieceManager.refresh_board()
-
+            clear_valid_moves()
 
 #const SQUARE_SIZE = 32
+
+
+func highlight_valid_moves(): 
+    # get the valid moves for the selected piece 
+    var valid_moves = target_piece.get_valid_moves($PieceManager.dark_piece_state, $PieceManager.light_piece_state)
+    # highlight those valid moves 
+    
+    var cur_index = 0
+    while cur_index < 64:
+        if (valid_moves.get_lsb() == 1):
+            var square_to_highlight = $GameBoard.get_child(cur_index)
+            square_to_highlight.highlight_square()
+        cur_index += 1
+        valid_moves.shift_right()
+
+func clear_valid_moves(): 
+    for each_child in $GameBoard.get_children(): 
+        if each_child is ClickableSprite: 
+            each_child.un_highlight_square()
+
 
 
 

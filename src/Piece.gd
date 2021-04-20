@@ -16,6 +16,9 @@ var bitboardFunctions
 var rank
 var file
 var piece_index # the index of the square within the PIECE_TABLE dictionary
+
+
+
 # Called when the node enters the scene tree for the first time.
 func _ready():
     rank = 0
@@ -61,9 +64,10 @@ func _physics_process(_delta):
 # new_file: the file of where we are moving 
 # own_side_bitboard: the map of all allied pieces 
 # enemy_bitboard: the map of all enemies
-func compute_is_valid_move(new_rank, new_file, own_side_bitboard, enemy_bitbaord):
+func compute_is_valid_move(new_rank, new_file, own_side_bitboard, enemy_bitboard):
     # get the bitboard representation of the board the player would like to make
     print('EEEEEOORRRRRROOOOOORRRRRR THIS IS AN OVERLOADED FUNCTION THIS SHOULDNT BE CALLING')
+    print("_enemy: ", enemy_bitboard)
     var new_index: int = (8 * new_rank) + new_file
     var shifted_piece_table = bitboardFunctions.PIECE_TABLE[new_index]
     #print("shifted: ", shifted_piece_table.to_string())
@@ -80,7 +84,11 @@ func compute_is_valid_move(new_rank, new_file, own_side_bitboard, enemy_bitbaord
     else: 
         return false
 
-func compute_piece_valid_moves(new_rank, new_file, own_side_bitboard): 
+# virtual method to be implemented by subclass
+func get_valid_moves(_dark_pieces_bitboard, _light_pieces_bitboard): 
+    pass
+
+func compute_piece_valid_moves(_new_rank, _new_file, own_side_bitboard): 
     print("COMPUTE_PIECE_VALID_MOVES SHOULD NOT BE CALLED")
     var piece_loc_bitboard = Bitboard.new()
     var new_msb = bitboardFunctions.PIECE_TABLE[piece_index].get_msb()

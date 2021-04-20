@@ -8,7 +8,6 @@ extends "res://src/Piece.gd"
 func compute_is_valid_move(new_rank, new_file, dark_pieces_bitboard, light_pieces_bitboard): 
     # Get the bitbaord representation of the move the player would like to make 
     #print("light piece calling!")
-    print("dark side: ", dark_pieces_bitboard.to_string())
     var new_index: int = (8 * new_rank) + new_file
     var shifted_piece_table = bitboardFunctions.PIECE_TABLE[new_index]
 
@@ -18,6 +17,9 @@ func compute_is_valid_move(new_rank, new_file, dark_pieces_bitboard, light_piece
     if is_valid.get_board_state() == 1 && is_valid.get_msb() == false: 
         return true
     return false
+
+func get_valid_moves(dark_pieces_bitboard, light_pieces_bitboard): 
+    return compute_light_piece_valid_moves(light_pieces_bitboard, dark_pieces_bitboard)
 
 
 func compute_light_piece_valid_moves(own_side_bitboard, enemy_bitboard):

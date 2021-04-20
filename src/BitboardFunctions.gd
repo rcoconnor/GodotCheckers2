@@ -112,7 +112,7 @@ func create_piece_table():
 static func multiple_shift_right(board, num_times): 
     var board_to_return = Bitboard.new()
     board_to_return.set_state(board.get_msb(), board.get_board_state())
-    for i in range(num_times): 
+    for _i in range(num_times): 
         board_to_return.shift_right()
     return board_to_return
 
@@ -120,7 +120,7 @@ static func multiple_shift_left(board, num_times):
     var board_to_return = Bitboard.new()
     board_to_return.set_state(board.get_msb(), board.get_board_state())
     if num_times != 0: 
-        for i in range(num_times): 
+        for _i in range(num_times): 
             board_to_return.shift_left()
     return board_to_return
 
@@ -152,7 +152,6 @@ static func LOGICAL_AND(first_bitboard, second_bitboard):
 const CLEAR_SIGN_BIT = 0x7FFFFFFFFFFFFFFF
 
 static func LOGICAL_NOT(bitboard): 
-    #print("original board: ", bitboard.to_string())
     var new_msb = ( !bitboard.get_msb() )
     var new_state = (( ~bitboard.get_board_state() ) & CLEAR_SIGN_BIT)
     #print("new state: %016x" % ( new_state  ))

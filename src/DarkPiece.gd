@@ -2,7 +2,6 @@ extends "res://src/Piece.gd"
 
 
 func compute_is_valid_move(new_rank, new_file, dark_pieces_bitboard, light_pieces_bitboard): 
-    print("light side: ", light_pieces_bitboard.to_string())
     var new_index: int = (8 * new_rank) + new_file
     var shifted_piece_table = bitboardFunctions.PIECE_TABLE[new_index]
 
@@ -12,6 +11,10 @@ func compute_is_valid_move(new_rank, new_file, dark_pieces_bitboard, light_piece
         return true
     return false 
 
+
+# Public Inherited method, returns all valid moves 
+func get_valid_moves(dark_pieces_bitboard, light_pieces_bitboard): 
+    return compute_dark_piece_valid_moves(dark_pieces_bitboard, light_pieces_bitboard)
 
 # uses a series of logical operations in order to find the valid moves 
 # returns: a bitboard containing the valid moves 

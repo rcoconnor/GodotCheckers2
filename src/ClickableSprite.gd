@@ -28,4 +28,5 @@ func _on_mouse_exit():
 func highlight_square(): 
     $AnimatedSprite.play("Medium")
 
-
+func un_highlight_square():
+    $AnimatedSprite.play("Dark")
