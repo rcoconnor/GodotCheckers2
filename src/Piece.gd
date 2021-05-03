@@ -64,36 +64,20 @@ func _physics_process(_delta):
 # new_file: the file of where we are moving 
 # own_side_bitboard: the map of all allied pieces 
 # enemy_bitboard: the map of all enemies
-func compute_is_valid_move(new_rank, new_file, own_side_bitboard, enemy_bitboard):
-    # get the bitboard representation of the board the player would like to make
-    print('EEEEEOORRRRRROOOOOORRRRRR THIS IS AN OVERLOADED FUNCTION THIS SHOULDNT BE CALLING')
-    print("_enemy: ", enemy_bitboard)
-    var new_index: int = (8 * new_rank) + new_file
-    var shifted_piece_table = bitboardFunctions.PIECE_TABLE[new_index]
-    #print("shifted: ", shifted_piece_table.to_string())
-    
-    # Get the valid moves from the targets current position 
-    var valid_moves = compute_piece_valid_moves(new_rank, new_file, own_side_bitboard)
-    #print('valid  : ', valid_moves.to_string())
+func compute_is_valid_move(_new_rank, _new_file, _own_side_bitboard, _enemy_bitboard):
+    pass 
 
-    # Determine if the move is a valid move 
-    var is_valid = BoardFunctions.multiple_shift_right(BoardFunctions.LOGICAL_AND(shifted_piece_table, valid_moves), new_index)
-    #print("isvalid: ", is_valid.to_string())
-    if is_valid.get_board_state() == 1 && is_valid.get_msb() == false: 
-        return true 
-    else: 
-        return false
 
 # virtual method to be implemented by subclass
 func get_valid_moves(_dark_pieces_bitboard, _light_pieces_bitboard): 
     pass
 
-func compute_piece_valid_moves(_new_rank, _new_file, own_side_bitboard): 
-    print("COMPUTE_PIECE_VALID_MOVES SHOULD NOT BE CALLED")
-    var piece_loc_bitboard = Bitboard.new()
-    var new_msb = bitboardFunctions.PIECE_TABLE[piece_index].get_msb()
-    var new_state = bitboardFunctions.PIECE_TABLE[piece_index].get_board_state()
-    piece_loc_bitboard.set_state(new_msb, new_state)
+func compute_piece_valid_moves(_new_rank, _new_file, _own_side_bitboard): 
+#   print("COMPUTE_PIECE_VALID_MOVES SHOULD NOT BE CALLED")
+#   var piece_loc_bitboard = Bitboard.new()
+#   var new_msb = bitboardFunctions.PIECE_TABLE[piece_index].get_msb()
+#   var new_state = bitboardFunctions.PIECE_TABLE[piece_index].get_board_state()
+#   piece_loc_bitboard.set_state(new_msb, new_state)
 #   print("piece_loc_bitboard: ", piece_loc_bitboard.to_string())
 #   print("rank: ", rank)
 #   print("file: ", file)
@@ -102,20 +86,22 @@ func compute_piece_valid_moves(_new_rank, _new_file, own_side_bitboard):
 #   print("ownside: ", own_side_bitboard.to_string())
 #   print("piece_index: ", piece_index)
     
-    var piece_clip_file_h = BoardFunctions.LOGICAL_AND(piece_loc_bitboard, bitboardFunctions.CLEAR_FILE[7])
-    var piece_clip_file_a = BoardFunctions.LOGICAL_AND(piece_loc_bitboard, bitboardFunctions.CLEAR_FILE[0])
-    #print("clip h: ", piece_clip_file_h.to_string()) 
-    var left_spot = BoardFunctions.multiple_shift_left(piece_clip_file_a, 7)
-    #print("left  : ", left_spot.to_string()) 
-    var right_spot = BoardFunctions.multiple_shift_left(piece_clip_file_h, 9)
-    #print("right : ", right_spot.to_string())
-    var possible_moves = BoardFunctions.LOGICAL_OR(left_spot, right_spot)
-    #print("possib: ", possible_moves.to_string())
-    var inverted_board = BoardFunctions.LOGICAL_NOT(own_side_bitboard)
-    #print('inverted: ', inverted_board.to_string())
-    var valid_moves = BoardFunctions.LOGICAL_AND(possible_moves, inverted_board)
-    #print("valids: ", valid_moves.to_string())
-    return valid_moves
+#   var piece_clip_file_h = BoardFunctions.LOGICAL_AND(piece_loc_bitboard, bitboardFunctions.CLEAR_FILE[7])
+#   var piece_clip_file_a = BoardFunctions.LOGICAL_AND(piece_loc_bitboard, bitboardFunctions.CLEAR_FILE[0])
+#   #print("clip h: ", piece_clip_file_h.to_string()) 
+#   var left_spot = BoardFunctions.multiple_shift_left(piece_clip_file_a, 7)
+#   #print("left  : ", left_spot.to_string()) 
+#   var right_spot = BoardFunctions.multiple_shift_left(piece_clip_file_h, 9)
+#   #print("right : ", right_spot.to_string())
+#   var possible_moves = BoardFunctions.LOGICAL_OR(left_spot, right_spot)
+#   #print("possib: ", possible_moves.to_string())
+#   var inverted_board = BoardFunctions.LOGICAL_NOT(own_side_bitboard)
+#   #print('inverted: ', inverted_board.to_string())
+#   var valid_moves = BoardFunctions.LOGICAL_AND(possible_moves, inverted_board)
+#   #print("valids: ", valid_moves.to_string())
+#   return valid_moves
+    pass
+
 
 func get_rank(): 
     return rank

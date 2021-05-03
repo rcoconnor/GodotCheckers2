@@ -1,0 +1,1865 @@
+{
+  "name": "GodotCheckers",
+  "description": "",
+  "version": null,
+  "classes": [
+    {
+      "name": "ReferenceCollectorCLI.gd",
+      "path": "res://ReferenceCollectorCLI.gd",
+      "extends_class": [
+        "SceneTree"
+      ],
+      "extends_file": "",
+      "icon": "",
+      "signature": "class ReferenceCollectorCLI.gd",
+      "description": "",
+      "sub_classes": [
+
+      ],
+      "constants": [
+
+      ],
+      "members": [
+        {
+          "name": "Collector",
+          "data_type": "SceneTree",
+          "default_value": null,
+          "setter": "",
+          "getter": "",
+          "export": false,
+          "signature": "var Collector: SceneTree",
+          "description": ""
+        },
+        {
+          "name": "directories",
+          "data_type": "Array",
+          "default_value": null,
+          "setter": "",
+          "getter": "",
+          "export": false,
+          "signature": "var directories: Array",
+          "description": " A list of directories to collect files from.\r\n"
+        },
+        {
+          "name": "is_recursive",
+          "data_type": "bool",
+          "default_value": null,
+          "setter": "",
+          "getter": "",
+          "export": false,
+          "signature": "var is_recursive: bool",
+          "description": " If true, explore each directory recursively\r\n"
+        },
+        {
+          "name": "patterns",
+          "data_type": "Array",
+          "default_value": null,
+          "setter": "",
+          "getter": "",
+          "export": false,
+          "signature": "var patterns: Array",
+          "description": " A list of patterns to filter files.\r\n"
+        }
+      ],
+      "signals": [
+
+      ],
+      "methods": [
+        {
+          "name": "_init",
+          "return_type": "null",
+          "rpc_mode": 0,
+          "signature": "func _init() -> null",
+          "description": "",
+          "arguments": [
+
+          ]
+        }
+      ],
+      "static_functions": [
+
+      ]
+    },
+    {
+      "name": "Collector.gd",
+      "path": "res://Collector.gd",
+      "extends_class": [
+        "SceneTree"
+      ],
+      "extends_file": "",
+      "icon": "",
+      "signature": "class Collector.gd",
+      "description": "",
+      "sub_classes": [
+
+      ],
+      "constants": [
+
+      ],
+      "members": [
+
+      ],
+      "signals": [
+
+      ],
+      "methods": [
+        {
+          "name": "find_files",
+          "return_type": "PoolStringArray",
+          "rpc_mode": 0,
+          "signature": "func find_files(dirpath: String = \"\", patterns: PoolStringArray = [], is_recursive: bool = false, do_skip_hidden: bool = true) -> PoolStringArray",
+          "description": "",
+          "arguments": [
+            {
+              "name": "dirpath",
+              "type": "String",
+              "default_value": ""
+            },
+            {
+              "name": "patterns",
+              "type": "PoolStringArray",
+              "default_value": [
+
+              ]
+            },
+            {
+              "name": "is_recursive",
+              "type": "bool",
+              "default_value": false
+            },
+            {
+              "name": "do_skip_hidden",
+              "type": "bool",
+              "default_value": true
+            }
+          ]
+        },
+        {
+          "name": "save_text",
+          "return_type": "null",
+          "rpc_mode": 0,
+          "signature": "func save_text(path: String = \"\", content: String = \"\") -> null",
+          "description": " Saves text to a file.\r\n",
+          "arguments": [
+            {
+              "name": "path",
+              "type": "String",
+              "default_value": ""
+            },
+            {
+              "name": "content",
+              "type": "String",
+              "default_value": ""
+            }
+          ]
+        },
+        {
+          "name": "get_reference",
+          "return_type": "Dictionary",
+          "rpc_mode": 0,
+          "signature": "func get_reference(files: PoolStringArray = [], refresh_cache: bool = false) -> Dictionary",
+          "description": " Parses a list of GDScript files and returns a list of dictionaries with the\r\n code reference data.\r\n\r\n If `refresh_cache` is true, will refresh Godot's cache and get fresh symbols.\r\n",
+          "arguments": [
+            {
+              "name": "files",
+              "type": "PoolStringArray",
+              "default_value": [
+
+              ]
+            },
+            {
+              "name": "refresh_cache",
+              "type": "bool",
+              "default_value": false
+            }
+          ]
+        },
+        {
+          "name": "print_pretty_json",
+          "return_type": "String",
+          "rpc_mode": 0,
+          "signature": "func print_pretty_json(reference: Dictionary) -> String",
+          "description": "",
+          "arguments": [
+            {
+              "name": "reference",
+              "type": "Dictionary"
+            }
+          ]
+        }
+      ],
+      "static_functions": [
+
+      ]
+    },
+    {
+      "name": "LookupTables.gd",
+      "path": "res://src/LookupTables.gd",
+      "extends_class": [
+        "Node2D"
+      ],
+      "extends_file": "",
+      "icon": "",
+      "signature": "class LookupTables.gd",
+      "description": "",
+      "sub_classes": [
+
+      ],
+      "constants": [
+        {
+          "name": "Bitboard",
+          "value": "[GDScript:18088]",
+          "data_type": "Bitboard",
+          "signature": "const Bitboard: Bitboard = preload(\"res://src/Bitboard.gd\")",
+          "description": ""
+        }
+      ],
+      "members": [
+        {
+          "name": "_irst",
+          "data_type": "var",
+          "default_value": null,
+          "setter": "",
+          "getter": "",
+          "export": false,
+          "signature": "var _irst",
+          "description": ""
+        },
+        {
+          "name": "CLEAR_RANK",
+          "data_type": "var",
+          "default_value": null,
+          "setter": "",
+          "getter": "",
+          "export": false,
+          "signature": "var CLEAR_RANK",
+          "description": ""
+        }
+      ],
+      "signals": [
+
+      ],
+      "methods": [
+        {
+          "name": "_init",
+          "return_type": "var",
+          "rpc_mode": 0,
+          "signature": "func _init()",
+          "description": "",
+          "arguments": [
+
+          ]
+        }
+      ],
+      "static_functions": [
+
+      ]
+    },
+    {
+      "name": "Piece.gd",
+      "path": "res://src/Piece.gd",
+      "extends_class": [
+        "Node2D"
+      ],
+      "extends_file": "",
+      "icon": "",
+      "signature": "class Piece.gd",
+      "description": "",
+      "sub_classes": [
+
+      ],
+      "constants": [
+        {
+          "name": "SPRITE_SIZE",
+          "value": 32,
+          "data_type": "int",
+          "signature": "const SPRITE_SIZE: int = 32",
+          "description": ""
+        },
+        {
+          "name": "BoardFunctions",
+          "value": "[GDScript:18090]",
+          "data_type": "GDScript",
+          "signature": "const BoardFunctions: GDScript = preload(\"res://src/BitboardFunctions.gd\")",
+          "description": "const Bitboard = prelead(\"res://src/Bitboard.gd\")\n"
+        }
+      ],
+      "members": [
+        {
+          "name": "mouse_is_over_collider",
+          "data_type": "var",
+          "default_value": null,
+          "setter": "",
+          "getter": "",
+          "export": false,
+          "signature": "var mouse_is_over_collider",
+          "description": ""
+        },
+        {
+          "name": "is_target",
+          "data_type": "var",
+          "default_value": null,
+          "setter": "",
+          "getter": "",
+          "export": false,
+          "signature": "var is_target",
+          "description": ""
+        },
+        {
+          "name": "old_pos",
+          "data_type": "var",
+          "default_value": null,
+          "setter": "",
+          "getter": "",
+          "export": false,
+          "signature": "var old_pos",
+          "description": ""
+        },
+        {
+          "name": "bitboardFunctions",
+          "data_type": "var",
+          "default_value": null,
+          "setter": "",
+          "getter": "",
+          "export": false,
+          "signature": "var bitboardFunctions",
+          "description": ""
+        },
+        {
+          "name": "rank",
+          "data_type": "var",
+          "default_value": null,
+          "setter": "",
+          "getter": "",
+          "export": false,
+          "signature": "var rank",
+          "description": ""
+        },
+        {
+          "name": "file",
+          "data_type": "var",
+          "default_value": null,
+          "setter": "",
+          "getter": "",
+          "export": false,
+          "signature": "var file",
+          "description": ""
+        },
+        {
+          "name": "piece_index",
+          "data_type": "var",
+          "default_value": null,
+          "setter": "",
+          "getter": "",
+          "export": false,
+          "signature": "var piece_index",
+          "description": " the index of the square within the PIECE_TABLE dictionary\n"
+        },
+        {
+          "name": "speed",
+          "data_type": "var",
+          "default_value": 500,
+          "setter": "",
+          "getter": "",
+          "export": true,
+          "signature": "export var speed = 500",
+          "description": ""
+        }
+      ],
+      "signals": [
+        {
+          "name": "piece_selected",
+          "arguments": [
+            "piece"
+          ],
+          "signature": "signal piece_selected(piece)",
+          "description": ""
+        }
+      ],
+      "methods": [
+        {
+          "name": "_ready",
+          "return_type": "var",
+          "rpc_mode": 0,
+          "signature": "func _ready()",
+          "description": " Called when the node enters the scene tree for the first time.\n",
+          "arguments": [
+
+          ]
+        },
+        {
+          "name": "_process",
+          "return_type": "var",
+          "rpc_mode": 0,
+          "signature": "func _process(_delta)",
+          "description": "",
+          "arguments": [
+            {
+              "name": "_delta",
+              "type": "var"
+            }
+          ]
+        },
+        {
+          "name": "set_file",
+          "return_type": "var",
+          "rpc_mode": 0,
+          "signature": "func set_file(new_file)",
+          "description": "",
+          "arguments": [
+            {
+              "name": "new_file",
+              "type": "var"
+            }
+          ]
+        },
+        {
+          "name": "set_rank",
+          "return_type": "var",
+          "rpc_mode": 0,
+          "signature": "func set_rank(new_rank)",
+          "description": "",
+          "arguments": [
+            {
+              "name": "new_rank",
+              "type": "var"
+            }
+          ]
+        },
+        {
+          "name": "set_new_global_pos",
+          "return_type": "var",
+          "rpc_mode": 0,
+          "signature": "func set_new_global_pos(new_pos)",
+          "description": "",
+          "arguments": [
+            {
+              "name": "new_pos",
+              "type": "var"
+            }
+          ]
+        },
+        {
+          "name": "_physics_process",
+          "return_type": "var",
+          "rpc_mode": 0,
+          "signature": "func _physics_process(_delta)",
+          "description": " Called every frame. 'delta' is the elapsed time since the previous frame.\n",
+          "arguments": [
+            {
+              "name": "_delta",
+              "type": "var"
+            }
+          ]
+        },
+        {
+          "name": "compute_is_valid_move",
+          "return_type": "var",
+          "rpc_mode": 0,
+          "signature": "func compute_is_valid_move(_new_rank, _new_file, _own_side_bitboard, _enemy_bitboard)",
+          "description": " returns whether or not a given move is legal from the current position \n new_rank: the rank of where we are moving \n new_file: the file of where we are moving \n own_side_bitboard: the map of all allied pieces \n enemy_bitboard: the map of all enemies\n",
+          "arguments": [
+            {
+              "name": "_new_rank",
+              "type": "var"
+            },
+            {
+              "name": "_new_file",
+              "type": "var"
+            },
+            {
+              "name": "_own_side_bitboard",
+              "type": "var"
+            },
+            {
+              "name": "_enemy_bitboard",
+              "type": "var"
+            }
+          ]
+        },
+        {
+          "name": "get_valid_moves",
+          "return_type": "var",
+          "rpc_mode": 0,
+          "signature": "func get_valid_moves(_dark_pieces_bitboard, _light_pieces_bitboard)",
+          "description": " virtual method to be implemented by subclass\n",
+          "arguments": [
+            {
+              "name": "_dark_pieces_bitboard",
+              "type": "var"
+            },
+            {
+              "name": "_light_pieces_bitboard",
+              "type": "var"
+            }
+          ]
+        },
+        {
+          "name": "compute_piece_valid_moves",
+          "return_type": "var",
+          "rpc_mode": 0,
+          "signature": "func compute_piece_valid_moves(_new_rank, _new_file, _own_side_bitboard)",
+          "description": "",
+          "arguments": [
+            {
+              "name": "_new_rank",
+              "type": "var"
+            },
+            {
+              "name": "_new_file",
+              "type": "var"
+            },
+            {
+              "name": "_own_side_bitboard",
+              "type": "var"
+            }
+          ]
+        },
+        {
+          "name": "get_rank",
+          "return_type": "var",
+          "rpc_mode": 0,
+          "signature": "func get_rank()",
+          "description": "",
+          "arguments": [
+
+          ]
+        },
+        {
+          "name": "get_file",
+          "return_type": "var",
+          "rpc_mode": 0,
+          "signature": "func get_file()",
+          "description": "",
+          "arguments": [
+
+          ]
+        },
+        {
+          "name": "_input",
+          "return_type": "var",
+          "rpc_mode": 0,
+          "signature": "func _input(event)",
+          "description": "",
+          "arguments": [
+            {
+              "name": "event",
+              "type": "var"
+            }
+          ]
+        },
+        {
+          "name": "_on_mouse_entered",
+          "return_type": "var",
+          "rpc_mode": 0,
+          "signature": "func _on_mouse_entered()",
+          "description": "",
+          "arguments": [
+
+          ]
+        },
+        {
+          "name": "_on_mouse_exit",
+          "return_type": "var",
+          "rpc_mode": 0,
+          "signature": "func _on_mouse_exit()",
+          "description": "",
+          "arguments": [
+
+          ]
+        }
+      ],
+      "static_functions": [
+
+      ]
+    },
+    {
+      "name": "Bitboard",
+      "path": "res://src/Bitboard.gd",
+      "extends_class": [
+        "Reference"
+      ],
+      "extends_file": "",
+      "icon": "",
+      "signature": "class Bitboard",
+      "description": "",
+      "sub_classes": [
+
+      ],
+      "constants": [
+        {
+          "name": "CLEAR_SIGN_BIT",
+          "value": 9223372036854775807,
+          "data_type": "int",
+          "signature": "const CLEAR_SIGN_BIT: int = 9223372036854775807",
+          "description": " clears the sign bit of a 64-bit integer\n"
+        },
+        {
+          "name": "STATE_MSB_MASK",
+          "value": 4611686018427387904,
+          "data_type": "int",
+          "signature": "const STATE_MSB_MASK: int = 4611686018427387904",
+          "description": " Masks all bit except for the MSB which we are using \n"
+        },
+        {
+          "name": "STATE_MSB_CLEAR",
+          "value": 4611686018427387903,
+          "data_type": "int",
+          "signature": "const STATE_MSB_CLEAR: int = 4611686018427387903",
+          "description": ""
+        },
+        {
+          "name": "MS_HALF_BYTE_CLEAR",
+          "value": 72057594037927935,
+          "data_type": "int",
+          "signature": "const MS_HALF_BYTE_CLEAR: int = 72057594037927935",
+          "description": " Clears the most significant four bits \n"
+        },
+        {
+          "name": "MS_HALF_BYTE_MASK",
+          "value": -1152921504606846976,
+          "data_type": "int",
+          "signature": "const MS_HALF_BYTE_MASK: int = -1152921504606846976",
+          "description": " we shift it over by one in order to ignore errors created by godot\n equal to 0xF000000000000000\n"
+        }
+      ],
+      "members": [
+        {
+          "name": "msb",
+          "data_type": "var",
+          "default_value": null,
+          "setter": "",
+          "getter": "",
+          "export": false,
+          "signature": "var msb",
+          "description": ""
+        },
+        {
+          "name": "board_state",
+          "data_type": "var",
+          "default_value": null,
+          "setter": "",
+          "getter": "",
+          "export": false,
+          "signature": "var board_state",
+          "description": ""
+        }
+      ],
+      "signals": [
+
+      ],
+      "methods": [
+        {
+          "name": "_ready",
+          "return_type": "var",
+          "rpc_mode": 0,
+          "signature": "func _ready()",
+          "description": "",
+          "arguments": [
+
+          ]
+        },
+        {
+          "name": "_update",
+          "return_type": "var",
+          "rpc_mode": 0,
+          "signature": "func _update(_delta)",
+          "description": "",
+          "arguments": [
+            {
+              "name": "_delta",
+              "type": "var"
+            }
+          ]
+        },
+        {
+          "name": "shift_right",
+          "return_type": "var",
+          "rpc_mode": 0,
+          "signature": "func shift_right()",
+          "description": "",
+          "arguments": [
+
+          ]
+        },
+        {
+          "name": "shift_left",
+          "return_type": "var",
+          "rpc_mode": 0,
+          "signature": "func shift_left()",
+          "description": "",
+          "arguments": [
+
+          ]
+        },
+        {
+          "name": "set_state",
+          "return_type": "var",
+          "rpc_mode": 0,
+          "signature": "func set_state(new_msb, new_state)",
+          "description": " sets the state\n   new_msb: boolean representing the msb\n   new_state: 63 bit number representing the baord state\n",
+          "arguments": [
+            {
+              "name": "new_msb",
+              "type": "var"
+            },
+            {
+              "name": "new_state",
+              "type": "var"
+            }
+          ]
+        },
+        {
+          "name": "convert_bits_to_string",
+          "return_type": "var",
+          "rpc_mode": 0,
+          "signature": "func convert_bits_to_string(half_byte)",
+          "description": "",
+          "arguments": [
+            {
+              "name": "half_byte",
+              "type": "var"
+            }
+          ]
+        },
+        {
+          "name": "to_string",
+          "return_type": "var",
+          "rpc_mode": 0,
+          "signature": "func to_string()",
+          "description": "",
+          "arguments": [
+
+          ]
+        },
+        {
+          "name": "convert_num_to_hex_string",
+          "return_type": "var",
+          "rpc_mode": 0,
+          "signature": "func convert_num_to_hex_string(num)",
+          "description": "",
+          "arguments": [
+            {
+              "name": "num",
+              "type": "var"
+            }
+          ]
+        },
+        {
+          "name": "get_lsb",
+          "return_type": "var",
+          "rpc_mode": 0,
+          "signature": "func get_lsb()",
+          "description": "",
+          "arguments": [
+
+          ]
+        },
+        {
+          "name": "get_msb",
+          "return_type": "var",
+          "rpc_mode": 0,
+          "signature": "func get_msb()",
+          "description": "",
+          "arguments": [
+
+          ]
+        },
+        {
+          "name": "get_board_state",
+          "return_type": "var",
+          "rpc_mode": 0,
+          "signature": "func get_board_state()",
+          "description": "",
+          "arguments": [
+
+          ]
+        }
+      ],
+      "static_functions": [
+
+      ]
+    },
+    {
+      "name": "BoardController.gd",
+      "path": "res://src/BoardController.gd",
+      "extends_class": [
+        "Node2D"
+      ],
+      "extends_file": "",
+      "icon": "",
+      "signature": "class BoardController.gd",
+      "description": "",
+      "sub_classes": [
+
+      ],
+      "constants": [
+        {
+          "name": "ClickableSprite",
+          "value": "[GDScript:18092]",
+          "data_type": "ClickableSprite",
+          "signature": "const ClickableSprite: ClickableSprite = preload(\"res://src/ClickableSprite.gd\")",
+          "description": ""
+        },
+        {
+          "name": "BoardFunctions",
+          "value": "[GDScript:18090]",
+          "data_type": "GDScript",
+          "signature": "const BoardFunctions: GDScript = preload(\"res://src/BitboardFunctions.gd\")",
+          "description": "const Bitboard = preload(\"res://src/Bitboard.gd\")\n"
+        },
+        {
+          "name": "Piece",
+          "value": "[GDScript:18094]",
+          "data_type": "GDScript",
+          "signature": "const Piece: GDScript = preload(\"res://src/Piece.gd\")",
+          "description": ""
+        },
+        {
+          "name": "LightPiece",
+          "value": "[GDScript:18096]",
+          "data_type": "GDScript",
+          "signature": "const LightPiece: GDScript = preload(\"res://src/LightPiece.gd\")",
+          "description": ""
+        },
+        {
+          "name": "DarkPiece",
+          "value": "[GDScript:18098]",
+          "data_type": "GDScript",
+          "signature": "const DarkPiece: GDScript = preload(\"res://src/DarkPiece.gd\")",
+          "description": ""
+        },
+        {
+          "name": "Lookup",
+          "value": "[GDScript:18100]",
+          "data_type": "GDScript",
+          "signature": "const Lookup: GDScript = preload(\"res://src/LookupTables.gd\")",
+          "description": ""
+        }
+      ],
+      "members": [
+        {
+          "name": "HighLightSquare",
+          "data_type": "var",
+          "default_value": "[Object:null]",
+          "setter": "",
+          "getter": "",
+          "export": true,
+          "signature": "export var HighLightSquare = \"[Object:null]\"",
+          "description": ""
+        },
+        {
+          "name": "target_piece",
+          "data_type": "var",
+          "default_value": null,
+          "setter": "",
+          "getter": "",
+          "export": false,
+          "signature": "var target_piece",
+          "description": ""
+        },
+        {
+          "name": "has_target",
+          "data_type": "var",
+          "default_value": null,
+          "setter": "",
+          "getter": "",
+          "export": false,
+          "signature": "var has_target",
+          "description": ""
+        },
+        {
+          "name": "original_pos",
+          "data_type": "var",
+          "default_value": null,
+          "setter": "",
+          "getter": "",
+          "export": false,
+          "signature": "var original_pos",
+          "description": ""
+        },
+        {
+          "name": "should_move",
+          "data_type": "var",
+          "default_value": null,
+          "setter": "",
+          "getter": "",
+          "export": false,
+          "signature": "var should_move",
+          "description": ""
+        },
+        {
+          "name": "board_functions",
+          "data_type": "var",
+          "default_value": null,
+          "setter": "",
+          "getter": "",
+          "export": false,
+          "signature": "var board_functions",
+          "description": ""
+        },
+        {
+          "name": "index",
+          "data_type": "var",
+          "default_value": null,
+          "setter": "",
+          "getter": "",
+          "export": false,
+          "signature": "var index",
+          "description": ""
+        }
+      ],
+      "signals": [
+
+      ],
+      "methods": [
+        {
+          "name": "_ready",
+          "return_type": "var",
+          "rpc_mode": 0,
+          "signature": "func _ready()",
+          "description": " Called when the node enters the scene tree for the first time.\n",
+          "arguments": [
+
+          ]
+        },
+        {
+          "name": "_process",
+          "return_type": "var",
+          "rpc_mode": 0,
+          "signature": "func _process(_delta)",
+          "description": " Called every frame. 'delta' is the elapsed time since the previous frame.\n",
+          "arguments": [
+            {
+              "name": "_delta",
+              "type": "var"
+            }
+          ]
+        },
+        {
+          "name": "_input",
+          "return_type": "var",
+          "rpc_mode": 0,
+          "signature": "func _input(event)",
+          "description": "",
+          "arguments": [
+            {
+              "name": "event",
+              "type": "var"
+            }
+          ]
+        },
+        {
+          "name": "select_piece_received",
+          "return_type": "var",
+          "rpc_mode": 0,
+          "signature": "func select_piece_received(node)",
+          "description": " called when a piece has been selected \n node: the node of the piece which has been selected \n",
+          "arguments": [
+            {
+              "name": "node",
+              "type": "var"
+            }
+          ]
+        },
+        {
+          "name": "_on_pieces_refreshed_screen",
+          "return_type": "var",
+          "rpc_mode": 0,
+          "signature": "func _on_pieces_refreshed_screen()",
+          "description": "",
+          "arguments": [
+
+          ]
+        },
+        {
+          "name": "selected_signal_received",
+          "return_type": "var",
+          "rpc_mode": 0,
+          "signature": "func selected_signal_received(square_rank, square_file)",
+          "description": " called when a square has been clicked, if there is a target piece and the \n selected square is a valid move, this method will update the board \n accordingly\n square_rank: the rank of the square which has been selected \n square_file: the file of the square which has been selected\n",
+          "arguments": [
+            {
+              "name": "square_rank",
+              "type": "var"
+            },
+            {
+              "name": "square_file",
+              "type": "var"
+            }
+          ]
+        },
+        {
+          "name": "highlight_valid_moves",
+          "return_type": "var",
+          "rpc_mode": 0,
+          "signature": "func highlight_valid_moves()",
+          "description": "",
+          "arguments": [
+
+          ]
+        },
+        {
+          "name": "clear_valid_moves",
+          "return_type": "var",
+          "rpc_mode": 0,
+          "signature": "func clear_valid_moves()",
+          "description": "",
+          "arguments": [
+
+          ]
+        }
+      ],
+      "static_functions": [
+
+      ]
+    },
+    {
+      "name": "BitboardFunctions.gd",
+      "path": "res://src/BitboardFunctions.gd",
+      "extends_class": [
+        "Reference"
+      ],
+      "extends_file": "",
+      "icon": "",
+      "signature": "class BitboardFunctions.gd",
+      "description": "",
+      "sub_classes": [
+
+      ],
+      "constants": [
+        {
+          "name": "Bitboard",
+          "value": "[GDScript:18088]",
+          "data_type": "Bitboard",
+          "signature": "const Bitboard: Bitboard = preload(\"res://src/Bitboard.gd\")",
+          "description": ""
+        },
+        {
+          "name": "FILE",
+          "value": {
+            "FILE_A": 0,
+            "FILE_B": 1,
+            "FILE_C": 2,
+            "FILE_D": 3,
+            "FILE_E": 4,
+            "FILE_F": 5,
+            "FILE_G": 6,
+            "FILE_H": 7
+          },
+          "data_type": "Dictionary",
+          "signature": "const FILE: Dictionary = {\"FILE_A\":0,\"FILE_B\":1,\"FILE_C\":2,\"FILE_D\":3,\"FILE_E\":4,\"FILE_F\":5,\"FILE_G\":6,\"FILE_H\":7}",
+          "description": ""
+        },
+        {
+          "name": "CLEAR_SIGN_BIT",
+          "value": 9223372036854775807,
+          "data_type": "int",
+          "signature": "const CLEAR_SIGN_BIT: int = 9223372036854775807",
+          "description": ""
+        },
+        {
+          "name": "RANK",
+          "value": {
+            "RANK_1": 0,
+            "RANK_2": 1,
+            "RANK_3": 2,
+            "RANK_4": 3,
+            "RANK_5": 4,
+            "RANK_6": 5,
+            "RANK_7": 6,
+            "RANK_8": 7
+          },
+          "data_type": "Dictionary",
+          "signature": "const RANK: Dictionary = {\"RANK_1\":0,\"RANK_2\":1,\"RANK_3\":2,\"RANK_4\":3,\"RANK_5\":4,\"RANK_6\":5,\"RANK_7\":6,\"RANK_8\":7}",
+          "description": ""
+        }
+      ],
+      "members": [
+        {
+          "name": "CLEAR_RANK",
+          "data_type": "var",
+          "default_value": null,
+          "setter": "",
+          "getter": "",
+          "export": false,
+          "signature": "var CLEAR_RANK",
+          "description": ""
+        },
+        {
+          "name": "MASK_RANK",
+          "data_type": "var",
+          "default_value": null,
+          "setter": "",
+          "getter": "",
+          "export": false,
+          "signature": "var MASK_RANK",
+          "description": ""
+        },
+        {
+          "name": "CLEAR_FILE",
+          "data_type": "var",
+          "default_value": null,
+          "setter": "",
+          "getter": "",
+          "export": false,
+          "signature": "var CLEAR_FILE",
+          "description": ""
+        },
+        {
+          "name": "MASK_FILE",
+          "data_type": "var",
+          "default_value": null,
+          "setter": "",
+          "getter": "",
+          "export": false,
+          "signature": "var MASK_FILE",
+          "description": ""
+        },
+        {
+          "name": "PIECE_TABLE",
+          "data_type": "var",
+          "default_value": null,
+          "setter": "",
+          "getter": "",
+          "export": false,
+          "signature": "var PIECE_TABLE",
+          "description": ""
+        }
+      ],
+      "signals": [
+
+      ],
+      "methods": [
+        {
+          "name": "create_mask_rank",
+          "return_type": "var",
+          "rpc_mode": 0,
+          "signature": "func create_mask_rank()",
+          "description": "",
+          "arguments": [
+
+          ]
+        },
+        {
+          "name": "create_clear_file",
+          "return_type": "var",
+          "rpc_mode": 0,
+          "signature": "func create_clear_file()",
+          "description": "",
+          "arguments": [
+
+          ]
+        },
+        {
+          "name": "create_mask_file",
+          "return_type": "var",
+          "rpc_mode": 0,
+          "signature": "func create_mask_file()",
+          "description": "",
+          "arguments": [
+
+          ]
+        },
+        {
+          "name": "create_clear_rank",
+          "return_type": "var",
+          "rpc_mode": 0,
+          "signature": "func create_clear_rank()",
+          "description": "",
+          "arguments": [
+
+          ]
+        },
+        {
+          "name": "create_piece_table",
+          "return_type": "var",
+          "rpc_mode": 0,
+          "signature": "func create_piece_table()",
+          "description": "",
+          "arguments": [
+
+          ]
+        },
+        {
+          "name": "_init",
+          "return_type": "var",
+          "rpc_mode": 0,
+          "signature": "func _init()",
+          "description": "",
+          "arguments": [
+
+          ]
+        }
+      ],
+      "static_functions": [
+        {
+          "name": "multiple_shift_right",
+          "return_type": "var",
+          "rpc_mode": 0,
+          "signature": "func multiple_shift_right(board, num_times)",
+          "description": " returns a copy of board shifted num_times times \n",
+          "arguments": [
+            {
+              "name": "board",
+              "type": "var"
+            },
+            {
+              "name": "num_times",
+              "type": "var"
+            }
+          ]
+        },
+        {
+          "name": "multiple_shift_left",
+          "return_type": "var",
+          "rpc_mode": 0,
+          "signature": "func multiple_shift_left(board, num_times)",
+          "description": "",
+          "arguments": [
+            {
+              "name": "board",
+              "type": "var"
+            },
+            {
+              "name": "num_times",
+              "type": "var"
+            }
+          ]
+        },
+        {
+          "name": "LOGICAL_OR",
+          "return_type": "var",
+          "rpc_mode": 0,
+          "signature": "func LOGICAL_OR(first_bitboard, second_bitboard)",
+          "description": "",
+          "arguments": [
+            {
+              "name": "first_bitboard",
+              "type": "var"
+            },
+            {
+              "name": "second_bitboard",
+              "type": "var"
+            }
+          ]
+        },
+        {
+          "name": "LOGICAL_AND",
+          "return_type": "var",
+          "rpc_mode": 0,
+          "signature": "func LOGICAL_AND(first_bitboard, second_bitboard)",
+          "description": "",
+          "arguments": [
+            {
+              "name": "first_bitboard",
+              "type": "var"
+            },
+            {
+              "name": "second_bitboard",
+              "type": "var"
+            }
+          ]
+        },
+        {
+          "name": "LOGICAL_NOT",
+          "return_type": "var",
+          "rpc_mode": 0,
+          "signature": "func LOGICAL_NOT(bitboard)",
+          "description": "",
+          "arguments": [
+            {
+              "name": "bitboard",
+              "type": "var"
+            }
+          ]
+        },
+        {
+          "name": "copy_bitboard",
+          "return_type": "var",
+          "rpc_mode": 0,
+          "signature": "func copy_bitboard(board_to_copy)",
+          "description": "",
+          "arguments": [
+            {
+              "name": "board_to_copy",
+              "type": "var"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "DarkPiece.gd",
+      "path": "res://src/DarkPiece.gd",
+      "extends_class": [
+
+      ],
+      "extends_file": "res://src/Piece.gd",
+      "icon": "",
+      "signature": "class DarkPiece.gd",
+      "description": "",
+      "sub_classes": [
+
+      ],
+      "constants": [
+
+      ],
+      "members": [
+
+      ],
+      "signals": [
+
+      ],
+      "methods": [
+        {
+          "name": "compute_is_valid_move",
+          "return_type": "var",
+          "rpc_mode": 0,
+          "signature": "func compute_is_valid_move(new_rank, new_file, dark_pieces_bitboard, light_pieces_bitboard)",
+          "description": "",
+          "arguments": [
+            {
+              "name": "new_rank",
+              "type": "var"
+            },
+            {
+              "name": "new_file",
+              "type": "var"
+            },
+            {
+              "name": "dark_pieces_bitboard",
+              "type": "var"
+            },
+            {
+              "name": "light_pieces_bitboard",
+              "type": "var"
+            }
+          ]
+        },
+        {
+          "name": "get_valid_moves",
+          "return_type": "var",
+          "rpc_mode": 0,
+          "signature": "func get_valid_moves(dark_pieces_bitboard, light_pieces_bitboard)",
+          "description": " Public Inherited method, returns all valid moves \n",
+          "arguments": [
+            {
+              "name": "dark_pieces_bitboard",
+              "type": "var"
+            },
+            {
+              "name": "light_pieces_bitboard",
+              "type": "var"
+            }
+          ]
+        },
+        {
+          "name": "compute_dark_piece_valid_moves",
+          "return_type": "var",
+          "rpc_mode": 0,
+          "signature": "func compute_dark_piece_valid_moves(own_side_bitboard, enemy_bitboard)",
+          "description": " uses a series of logical operations in order to find the valid moves \n returns: a bitboard containing the valid moves \n",
+          "arguments": [
+            {
+              "name": "own_side_bitboard",
+              "type": "var"
+            },
+            {
+              "name": "enemy_bitboard",
+              "type": "var"
+            }
+          ]
+        },
+        {
+          "name": "handle_jumping",
+          "return_type": "var",
+          "rpc_mode": 0,
+          "signature": "func handle_jumping(jump_piece, own_side_bitboard, enemy_bitboard)",
+          "description": "# @method handle_jumping - calculates the valid jump moves for a given position\n# and further possible jumps\n# @param jump_piece: Bitboard - the bitboard representing the position of the \n# jumping piece \n# @param enemy_bitboard: Bitboard - represents the \n",
+          "arguments": [
+            {
+              "name": "jump_piece",
+              "type": "var"
+            },
+            {
+              "name": "own_side_bitboard",
+              "type": "var"
+            },
+            {
+              "name": "enemy_bitboard",
+              "type": "var"
+            }
+          ]
+        }
+      ],
+      "static_functions": [
+
+      ]
+    },
+    {
+      "name": "LightPiece.gd",
+      "path": "res://src/LightPiece.gd",
+      "extends_class": [
+
+      ],
+      "extends_file": "res://src/Piece.gd",
+      "icon": "",
+      "signature": "class LightPiece.gd",
+      "description": "",
+      "sub_classes": [
+
+      ],
+      "constants": [
+
+      ],
+      "members": [
+
+      ],
+      "signals": [
+
+      ],
+      "methods": [
+        {
+          "name": "compute_is_valid_move",
+          "return_type": "var",
+          "rpc_mode": 0,
+          "signature": "func compute_is_valid_move(new_rank, new_file, dark_pieces_bitboard, light_pieces_bitboard)",
+          "description": " returns whether or not a given move is legal from the current position \n new_rank: the rank of where we are moving \n new_file: the file of where we are moving \n own_side_bitboard: the map of all allied pieces \n enemy_bitboard: the map of all enemies\n",
+          "arguments": [
+            {
+              "name": "new_rank",
+              "type": "var"
+            },
+            {
+              "name": "new_file",
+              "type": "var"
+            },
+            {
+              "name": "dark_pieces_bitboard",
+              "type": "var"
+            },
+            {
+              "name": "light_pieces_bitboard",
+              "type": "var"
+            }
+          ]
+        },
+        {
+          "name": "get_valid_moves",
+          "return_type": "var",
+          "rpc_mode": 0,
+          "signature": "func get_valid_moves(dark_pieces_bitboard, light_pieces_bitboard)",
+          "description": "",
+          "arguments": [
+            {
+              "name": "dark_pieces_bitboard",
+              "type": "var"
+            },
+            {
+              "name": "light_pieces_bitboard",
+              "type": "var"
+            }
+          ]
+        },
+        {
+          "name": "compute_light_piece_valid_moves",
+          "return_type": "var",
+          "rpc_mode": 0,
+          "signature": "func compute_light_piece_valid_moves(own_side_bitboard, enemy_bitboard)",
+          "description": "",
+          "arguments": [
+            {
+              "name": "own_side_bitboard",
+              "type": "var"
+            },
+            {
+              "name": "enemy_bitboard",
+              "type": "var"
+            }
+          ]
+        }
+      ],
+      "static_functions": [
+
+      ]
+    },
+    {
+      "name": "ClickableSprite",
+      "path": "res://src/ClickableSprite.gd",
+      "extends_class": [
+        "Node2D"
+      ],
+      "extends_file": "",
+      "icon": "",
+      "signature": "class ClickableSprite",
+      "description": "",
+      "sub_classes": [
+
+      ],
+      "constants": [
+
+      ],
+      "members": [
+        {
+          "name": "mouse_is_over_collider",
+          "data_type": "var",
+          "default_value": null,
+          "setter": "",
+          "getter": "",
+          "export": false,
+          "signature": "var mouse_is_over_collider",
+          "description": ""
+        },
+        {
+          "name": "rank",
+          "data_type": "var",
+          "default_value": null,
+          "setter": "",
+          "getter": "",
+          "export": false,
+          "signature": "var rank",
+          "description": ""
+        },
+        {
+          "name": "file",
+          "data_type": "var",
+          "default_value": null,
+          "setter": "",
+          "getter": "",
+          "export": false,
+          "signature": "var file",
+          "description": ""
+        }
+      ],
+      "signals": [
+        {
+          "name": "selected",
+          "arguments": [
+            "x_val",
+            "y_val"
+          ],
+          "signature": "signal selected(x_val, y_val)",
+          "description": ""
+        }
+      ],
+      "methods": [
+        {
+          "name": "_ready",
+          "return_type": "var",
+          "rpc_mode": 0,
+          "signature": "func _ready()",
+          "description": "",
+          "arguments": [
+
+          ]
+        },
+        {
+          "name": "_input",
+          "return_type": "var",
+          "rpc_mode": 0,
+          "signature": "func _input(event)",
+          "description": "",
+          "arguments": [
+            {
+              "name": "event",
+              "type": "var"
+            }
+          ]
+        },
+        {
+          "name": "_on_mouse_entered",
+          "return_type": "var",
+          "rpc_mode": 0,
+          "signature": "func _on_mouse_entered()",
+          "description": "",
+          "arguments": [
+
+          ]
+        },
+        {
+          "name": "_on_mouse_exit",
+          "return_type": "var",
+          "rpc_mode": 0,
+          "signature": "func _on_mouse_exit()",
+          "description": "",
+          "arguments": [
+
+          ]
+        },
+        {
+          "name": "highlight_square",
+          "return_type": "var",
+          "rpc_mode": 0,
+          "signature": "func highlight_square()",
+          "description": "",
+          "arguments": [
+
+          ]
+        },
+        {
+          "name": "un_highlight_square",
+          "return_type": "var",
+          "rpc_mode": 0,
+          "signature": "func un_highlight_square()",
+          "description": "",
+          "arguments": [
+
+          ]
+        }
+      ],
+      "static_functions": [
+
+      ]
+    },
+    {
+      "name": "PieceManager.gd",
+      "path": "res://src/PieceManager.gd",
+      "extends_class": [
+        "Node2D"
+      ],
+      "extends_file": "",
+      "icon": "",
+      "signature": "class PieceManager.gd",
+      "description": "",
+      "sub_classes": [
+
+      ],
+      "constants": [
+        {
+          "name": "Bitboard",
+          "value": "[GDScript:18088]",
+          "data_type": "Bitboard",
+          "signature": "const Bitboard: Bitboard = preload(\"res://src/Bitboard.gd\")",
+          "description": ""
+        },
+        {
+          "name": "SPRITE_SIZE",
+          "value": 32,
+          "data_type": "int",
+          "signature": "const SPRITE_SIZE: int = 32",
+          "description": " important constants\n"
+        },
+        {
+          "name": "BoardFunctions",
+          "value": "[GDScript:18090]",
+          "data_type": "GDScript",
+          "signature": "const BoardFunctions: GDScript = preload(\"res://src/BitboardFunctions.gd\")",
+          "description": ""
+        }
+      ],
+      "members": [
+        {
+          "name": "board_functions",
+          "data_type": "var",
+          "default_value": null,
+          "setter": "",
+          "getter": "",
+          "export": false,
+          "signature": "var board_functions",
+          "description": ""
+        },
+        {
+          "name": "LightPiece",
+          "data_type": "var",
+          "default_value": "[Object:null]",
+          "setter": "",
+          "getter": "",
+          "export": true,
+          "signature": "export var LightPiece = \"[Object:null]\"",
+          "description": ""
+        },
+        {
+          "name": "DarkPiece",
+          "data_type": "var",
+          "default_value": "[Object:null]",
+          "setter": "",
+          "getter": "",
+          "export": true,
+          "signature": "export var DarkPiece = \"[Object:null]\"",
+          "description": ""
+        },
+        {
+          "name": "dark_piece_state",
+          "data_type": "var",
+          "default_value": null,
+          "setter": "",
+          "getter": "",
+          "export": false,
+          "signature": "var dark_piece_state",
+          "description": ""
+        },
+        {
+          "name": "light_piece_state",
+          "data_type": "var",
+          "default_value": null,
+          "setter": "",
+          "getter": "",
+          "export": false,
+          "signature": "var light_piece_state",
+          "description": ""
+        },
+        {
+          "name": "pieces_array",
+          "data_type": "var",
+          "default_value": null,
+          "setter": "",
+          "getter": "",
+          "export": false,
+          "signature": "var pieces_array",
+          "description": " Member variables\n"
+        }
+      ],
+      "signals": [
+        {
+          "name": "refreshed_screen",
+          "arguments": [
+
+          ],
+          "signature": "signal refreshed_screen()",
+          "description": ""
+        }
+      ],
+      "methods": [
+        {
+          "name": "_ready",
+          "return_type": "var",
+          "rpc_mode": 0,
+          "signature": "func _ready()",
+          "description": "",
+          "arguments": [
+
+          ]
+        },
+        {
+          "name": "_process",
+          "return_type": "var",
+          "rpc_mode": 0,
+          "signature": "func _process(_delta)",
+          "description": "",
+          "arguments": [
+            {
+              "name": "_delta",
+              "type": "var"
+            }
+          ]
+        },
+        {
+          "name": "move_pieces",
+          "return_type": "var",
+          "rpc_mode": 0,
+          "signature": "func move_pieces(from_rank, from_file, to_rank, to_file, is_white_piece)",
+          "description": "",
+          "arguments": [
+            {
+              "name": "from_rank",
+              "type": "var"
+            },
+            {
+              "name": "from_file",
+              "type": "var"
+            },
+            {
+              "name": "to_rank",
+              "type": "var"
+            },
+            {
+              "name": "to_file",
+              "type": "var"
+            },
+            {
+              "name": "is_white_piece",
+              "type": "var"
+            }
+          ]
+        },
+        {
+          "name": "clear_board",
+          "return_type": "var",
+          "rpc_mode": 0,
+          "signature": "func clear_board()",
+          "description": " clears the board \n",
+          "arguments": [
+
+          ]
+        },
+        {
+          "name": "refresh_board",
+          "return_type": "var",
+          "rpc_mode": 0,
+          "signature": "func refresh_board()",
+          "description": "",
+          "arguments": [
+
+          ]
+        },
+        {
+          "name": "instance_pieces",
+          "return_type": "var",
+          "rpc_mode": 0,
+          "signature": "func instance_pieces(node_to_instance, state)",
+          "description": "",
+          "arguments": [
+            {
+              "name": "node_to_instance",
+              "type": "var"
+            },
+            {
+              "name": "state",
+              "type": "var"
+            }
+          ]
+        },
+        {
+          "name": "set_dark_piece_state",
+          "return_type": "var",
+          "rpc_mode": 0,
+          "signature": "func set_dark_piece_state(new_state)",
+          "description": "",
+          "arguments": [
+            {
+              "name": "new_state",
+              "type": "var"
+            }
+          ]
+        },
+        {
+          "name": "get_dark_piece_state",
+          "return_type": "var",
+          "rpc_mode": 0,
+          "signature": "func get_dark_piece_state()",
+          "description": "",
+          "arguments": [
+
+          ]
+        },
+        {
+          "name": "set_light_piece_state",
+          "return_type": "var",
+          "rpc_mode": 0,
+          "signature": "func set_light_piece_state(new_state)",
+          "description": "",
+          "arguments": [
+            {
+              "name": "new_state",
+              "type": "var"
+            }
+          ]
+        },
+        {
+          "name": "get_light_piece_state",
+          "return_type": "var",
+          "rpc_mode": 0,
+          "signature": "func get_light_piece_state()",
+          "description": "",
+          "arguments": [
+
+          ]
+        }
+      ],
+      "static_functions": [
+
+      ]
+    }
+  ]
+}
