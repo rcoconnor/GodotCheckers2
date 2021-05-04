@@ -42,3 +42,33 @@ func compute_light_piece_valid_moves(own_side_bitboard, enemy_bitboard):
 
     return valid_moves
 
+
+func handle_jumping(pos_bitboard, own_side_bitboard, enemy_bitboard): 
+    var val_to_return = Bitboard.new()
+    val_to_return.set_state(false, 0)
+    var left_spot = BoardFunctions.multiple_shift_right(pos_bitboard, 9)
+    var right_spot = BoardFunctions.multiple_shift_right(pos_bitboard, 7)
+    
+    # the player can only jump enemies so mask everyone but the enemies 
+    var is_left = BoardFunctions.LOGICAL_AND(enemy_bitboard, left_spot)
+    var is_right = BoardFunctions.LOGICAL_AND(enemy_bitboard, right_spot)
+
+    is_left = BoardFunctions.multiple_shift_right(is_left, piece_index - 9)
+    is_right = BoardFunctions.multiple_shift_right(is_right, piece_index - 7)
+
+    if is_left.get_lsb() == 1:
+        print("there should be a left jump")
+        left_spot = BoardFunctions.multiple_shift_right(left_spot, 9)
+        var temp = BoardFunctions.LOGICAL_OR(is_left, left_spot)
+        val_to_return = BoardFunctions.LOGICAL_OR(temp, val_to_return)
+    if is_right.get_lsb() == 1: 
+        print("there hsould be a right jump")
+        right_spot = BoardFunctions.multiple_shift_right(right_spot, 7)
+        var temp = BoardFunctions.LOGICAL_OR(is_right, right_spot)
+        val_to_return = BoardFunctions.LOGICAL_OR(temp, val_to_return)
+
+    return val_to_return 
+
+
+
+

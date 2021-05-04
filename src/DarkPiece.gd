@@ -44,39 +44,54 @@ func compute_dark_piece_valid_moves(own_side_bitboard, enemy_bitboard):
    
     # handle the jumps 
     #var val = handle_jumping(piece_loc_bitboard, own_side_bitboard, enemy_bitboard)
-    var l_spot = BoardFunctions.multiple_shift_left(piece_loc_bitboard, 7)
-    print("lspt: ", l_spot.to_string())
+#   var l_spot = BoardFunctions.multiple_shift_left(piece_loc_bitboard, 7)
+#   print("lspt: ", l_spot.to_string())
 
-    # mask all positions except the position we care about 
-    var left_is_occupied = BoardFunctions.LOGICAL_AND(enemy_bitboard, l_spot)
-    # shift it right x positions
-    left_is_occupied = BoardFunctions.multiple_shift_right(left_is_occupied, 7 + piece_index)
-    print("left: ", left_is_occupied.to_string())
-    if(left_is_occupied.get_lsb() == 1): 
-        print("there should be a jump")
-        var temp = BoardFunctions.LOGICAL_OR(left_is_occupied, BoardFunctions.multiple_shift_left(left_spot, 7))
-        valid_moves = BoardFunctions.LOGICAL_OR(temp, valid_moves)
-    #valid_moves = BoardFunctions.LOGICAL_OR(valid_moves, val)
+#   # mask all positions except the position we care about 
+#   var left_is_occupied = BoardFunctions.LOGICAL_AND(enemy_bitboard, l_spot)
+#   # shift it right x positions
+#   left_is_occupied = BoardFunctions.multiple_shift_right(left_is_occupied, 7 + piece_index)
+#   print("left: ", left_is_occupied.to_string())
+#   if(left_is_occupied.get_lsb() == 1): 
+#       print("there should be a jump")
+#       var temp = BoardFunctions.LOGICAL_OR(left_is_occupied, BoardFunctions.multiple_shift_left(left_spot, 7))
+#       valid_moves = BoardFunctions.LOGICAL_OR(temp, valid_moves)
+    print("valid moves before: ", valid_moves.to_string())
+    valid_moves = BoardFunctions.LOGICAL_OR(valid_moves, handle_jumping(piece_loc_bitboard, own_side_bitboard, enemy_bitboard))
+    print("valid moves after: ", valid_moves.to_string())
     return valid_moves
 
 ## @method handle_jumping - calculates the valid jump moves for a given position
 ## and further possible jumps
-## @param jump_piece: Bitboard - the bitboard representing the position of the 
+## @param pos_bitboard: Bitboard - the bitboard representing the position of the
 ## jumping piece 
-## @param enemy_bitboard: Bitboard - represents the 
+## @param enemy_bitboard: Bitboard - the bitboard representing the position of
+## the enemy piece 
+## @returns the valid jumps the player can do 
 func handle_jumping(pos_bitboard, own_side_bitboard, enemy_bitboard): 
-    print("handle jumping entered")
+    print("handle jumping called")
+    var val_to_return = Bitboard.new()
+    val_to_return.set_state(false, 0)
     var left_spot = BoardFunctions.multiple_shift_left(pos_bitboard, 7)
-    var right = BoardFunctions.mutliple_shift_left(pos_bitboard, 9)
-    
-    # mask all positions except for the pos we care about
-    var is_left = BoardFunctions.LOGICAL_AND(own_side_bitboard, left_spot)
-    # shift it so we can check if it is occupied 
+    var right_spot = BoardFunctions.multiple_shift_left(pos_bitboard, 9)
+    # the player can only jump enemies so mask everyone but the enemies 
+    var is_left = BoardFunctions.LOGICAL_AND(enemy_bitboard, left_spot)
+    var is_right = BoardFunctions.LOGICAL_AND(enemy_bitboard, right_spot)
+    # shift it so we can check if it is occupied
     is_left = BoardFunctions.multiple_shift_right(is_left, 7 + piece_index)
-    var board_to_return = Bitboard.new()
-    board_to_return.set_state(false, 0)
-    if (is_left.get_lsb() == 1): 
-        print("there shold be a jump")
-        var temp = BoardFunctions.LOGICAL_OR(board_to_return, BoardFunctions.multiple_shift_left(left_spot, 7))
-        board_to_return.set_state(temp.get_msb(), temp.get_lsb())
-    return board_to_return
+    is_right = BoardFunctions.multiple_shift_right(is_right, 9 + piece_index)
+
+    if is_left.get_lsb() == 1: 
+        left_spot = BoardFunctions.multiple_shift_left(left_spot, 7)
+        var temp = BoardFunctions.LOGICAL_OR(is_left, left_spot)
+        val_to_return = BoardFunctions.LOGICAL_OR(temp, val_to_return)
+    if is_right.get_lsb() == 1: 
+        right_spot = BoardFunctions.multiple_shift_left(right_spot, 9)
+        var temp = BoardFunctions.LOGICAL_OR(is_right, right_spot)
+        val_to_return = BoardFunctions.LOGICAL_OR(temp, val_to_return)
+
+    return val_to_return
+
+
+
+
