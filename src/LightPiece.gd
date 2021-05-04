@@ -39,11 +39,14 @@ func compute_light_piece_valid_moves(own_side_bitboard, enemy_bitboard):
 
     var temp_valid_moves = BoardFunctions.LOGICAL_AND(possible_moves, inverted_board)
     var valid_moves = BoardFunctions.LOGICAL_AND(temp_valid_moves, inverted_enemy)
-
+    print("valid moves before: ", valid_moves.to_string())
+    valid_moves = BoardFunctions.LOGICAL_OR(valid_moves, handle_jumping(piece_loc_bitboard, own_side_bitboard, enemy_bitboard))
+    print("valid moves after : ", valid_moves.to_string())
     return valid_moves
 
 
 func handle_jumping(pos_bitboard, own_side_bitboard, enemy_bitboard): 
+    print("handle jumping called")
     var val_to_return = Bitboard.new()
     val_to_return.set_state(false, 0)
     var left_spot = BoardFunctions.multiple_shift_right(pos_bitboard, 9)

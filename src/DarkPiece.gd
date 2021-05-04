@@ -69,7 +69,6 @@ func compute_dark_piece_valid_moves(own_side_bitboard, enemy_bitboard):
 ## the enemy piece 
 ## @returns the valid jumps the player can do 
 func handle_jumping(pos_bitboard, own_side_bitboard, enemy_bitboard): 
-    print("handle jumping called")
     var val_to_return = Bitboard.new()
     val_to_return.set_state(false, 0)
     var left_spot = BoardFunctions.multiple_shift_left(pos_bitboard, 7)
