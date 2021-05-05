@@ -119,6 +119,8 @@ func highlight_valid_moves():
             # FIXME: should not have to check if it is a clickable sprite
             if square_to_highlight is ClickableSprite:
                 square_to_highlight.highlight_square()
+            else: 
+                print("this is an error should not be happening")
         cur_index += 1
         valid_moves.shift_right()
 
