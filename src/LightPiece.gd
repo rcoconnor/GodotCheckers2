@@ -33,24 +33,31 @@ func compute_light_piece_valid_moves(own_side_bitboard, enemy_bitboard):
     var right_spot = BoardFunctions.multiple_shift_right(piece_clip_file_h, 7)
     var possible_moves = BoardFunctions.LOGICAL_OR(left_spot, right_spot)
     
+    # handle jumping 
+    var jump_bitboard = handle_jumping(piece_loc_bitboard, own_side_bitboard, enemy_bitboard)
+    possible_moves = BoardFunctions.LOGICAL_OR(possible_moves, jump_bitboard)
+    
     # NOT the whole bitboard in order to clear the old position from the board
     var inverted_board = BoardFunctions.LOGICAL_NOT(own_side_bitboard)
     var inverted_enemy = BoardFunctions.LOGICAL_NOT(enemy_bitboard)
 
     var temp_valid_moves = BoardFunctions.LOGICAL_AND(possible_moves, inverted_board)
     var valid_moves = BoardFunctions.LOGICAL_AND(temp_valid_moves, inverted_enemy)
-    print("valid moves before: ", valid_moves.to_string())
-    valid_moves = BoardFunctions.LOGICAL_OR(valid_moves, handle_jumping(piece_loc_bitboard, own_side_bitboard, enemy_bitboard))
-    print("valid moves after : ", valid_moves.to_string())
     return valid_moves
 
 
 func handle_jumping(pos_bitboard, own_side_bitboard, enemy_bitboard): 
-    print("handle jumping called")
+    #var piece_clip_file_b = Bitboard.new()
+    #var piece_clip_file_g = Bitboard.new()
+
+    var piece_clip_file_h = BoardFunctions.LOGICAL_AND(pos_bitboard, bitboardFunctions.CLEAR_FILE[7])
+    var piece_clip_file_a = BoardFunctions.LOGICAL_AND(pos_bitboard, bitboardFunctions.CLEAR_FILE[0])
+    
     var val_to_return = Bitboard.new()
     val_to_return.set_state(false, 0)
-    var left_spot = BoardFunctions.multiple_shift_right(pos_bitboard, 9)
-    var right_spot = BoardFunctions.multiple_shift_right(pos_bitboard, 7)
+    
+    var left_spot = BoardFunctions.multiple_shift_right(piece_clip_file_a, 9)
+    var right_spot = BoardFunctions.multiple_shift_right(piece_clip_file_h, 7)
     
     # the player can only jump enemies so mask everyone but the enemies 
     var is_left = BoardFunctions.LOGICAL_AND(enemy_bitboard, left_spot)
@@ -60,13 +67,11 @@ func handle_jumping(pos_bitboard, own_side_bitboard, enemy_bitboard):
     is_right = BoardFunctions.multiple_shift_right(is_right, piece_index - 7)
 
     if is_left.get_lsb() == 1:
-        print("there should be a left jump")
-        left_spot = BoardFunctions.multiple_shift_right(left_spot, 9)
+        left_spot = BoardFunctions.multiple_shift_right(piece_clip_file_a, 18)
         var temp = BoardFunctions.LOGICAL_OR(is_left, left_spot)
         val_to_return = BoardFunctions.LOGICAL_OR(temp, val_to_return)
     if is_right.get_lsb() == 1: 
-        print("there hsould be a right jump")
-        right_spot = BoardFunctions.multiple_shift_right(right_spot, 7)
+        right_spot = BoardFunctions.multiple_shift_right(piece_clip_file_h, 14)
         var temp = BoardFunctions.LOGICAL_OR(is_right, right_spot)
         val_to_return = BoardFunctions.LOGICAL_OR(temp, val_to_return)
 

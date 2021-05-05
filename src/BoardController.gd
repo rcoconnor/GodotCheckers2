@@ -110,12 +110,15 @@ func highlight_valid_moves():
     # get the valid moves for the selected piece 
     var valid_moves = target_piece.get_valid_moves($PieceManager.dark_piece_state, $PieceManager.light_piece_state)
     # highlight those valid moves 
-    
+    var old_valid_moves = Bitboard.new()
+    old_valid_moves.set_state(valid_moves.get_msb(), valid_moves.get_board_state())
     var cur_index = 0
     while cur_index < 64:
         if (valid_moves.get_lsb() == 1):
             var square_to_highlight = $GameBoard.get_child(cur_index)
-            square_to_highlight.highlight_square()
+            # FIXME: should not have to check if it is a clickable sprite
+            if square_to_highlight is ClickableSprite:
+                square_to_highlight.highlight_square()
         cur_index += 1
         valid_moves.shift_right()
 
