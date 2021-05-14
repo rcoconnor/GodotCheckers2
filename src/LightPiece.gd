@@ -34,7 +34,7 @@ func compute_light_piece_valid_moves(own_side_bitboard, enemy_bitboard):
     var possible_moves = BoardFunctions.LOGICAL_OR(left_spot, right_spot)
     
     # handle jumping 
-    var jump_bitboard = handle_jumping(piece_loc_bitboard, own_side_bitboard, enemy_bitboard)
+    var jump_bitboard = handle_jumping(piece_loc_bitboard, enemy_bitboard)
     possible_moves = BoardFunctions.LOGICAL_OR(possible_moves, jump_bitboard)
     
     # NOT the whole bitboard in order to clear the old position from the board
@@ -46,7 +46,7 @@ func compute_light_piece_valid_moves(own_side_bitboard, enemy_bitboard):
     return valid_moves
 
 
-func handle_jumping(pos_bitboard, own_side_bitboard, enemy_bitboard): 
+func handle_jumping(pos_bitboard, enemy_bitboard): 
     #var piece_clip_file_b = Bitboard.new()
     #var piece_clip_file_g = Bitboard.new()
 
@@ -80,5 +80,14 @@ func handle_jumping(pos_bitboard, own_side_bitboard, enemy_bitboard):
     return val_to_return 
 
 
+func get_left_move_piece_board(): 
+    var pos_bitboard = bitboardFunctions.PIECE_TABLE[piece_index]
+    var piece_clip_file_a = BoardFunctions.LOGICAL_AND(pos_bitboard, bitboardFunctions.CLEAR_FILE[0])
+    var left_spot = BoardFunctions.multiple_shift_right(piece_clip_file_a, 9)
+    return left_spot
 
+func get_right_move_piece_board(): 
+    var pos_bitboard = bitboardFunctions.PIECE_TABLE[piece_index]
+    var piece_clip_file_h = BoardFunctions.LOGICAL_AND(pos_bitboard, bitboardFunctions.CLEAR_FILE[7])
+    var right_spot = BoardFunctions.multiple_shift_right(piece_clip_file_h, 7)
 

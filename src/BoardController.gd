@@ -38,19 +38,6 @@ func _ready():
     for each_child in $GameBoard.get_children(): 
         if each_child is ClickableSprite: 
             each_child.connect("selected", self, "selected_signal_received")
-   #print("----debugging----")
-   #var light_piece_bboard = Bitboard.new()
-   #light_piece_bboard.set_state(true, 0x2255a80500000000)
-   #var dark_piece_bboard = Bitboard.new()
-   #dark_piece_bboard.set_state(false, 0x000002000045aa55)
-   #var temp_target = preload("res://obj/DarkPiece.tscn").instance()
-   #add_child(temp_target)
-   #temp_target.set_file(1)
-   #temp_target.set_rank(5)
-   #print("getting valid moves")
-   #var val = temp_target.get_valid_moves(dark_piece_bboard, light_piece_bboard)
-   #print("val: ", val.to_string())
-
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(_delta):
@@ -107,6 +94,8 @@ func selected_signal_received(square_rank, square_file):
                     $PieceManager.refresh_board()
                 elif target_piece is DarkPiece: 
                     $PieceManager.move_pieces(target_piece.get_rank(), target_piece.get_file(), square_rank, square_file, false)
+                    #if(square_rank - target_piece.get_rank() == 2):
+                        #print("this is also a jump")
                     has_target = false
                     $PieceManager.refresh_board()
             # un-highlight all the valid moves 
@@ -133,15 +122,6 @@ func highlight_valid_moves():
                 square_to_highlight.highlight_square()
             else: 
                 print("this is an error should not be happening")
-                print("occured at index: ", cur_index)
-                print("old_valid: ", old_valid_moves.to_string())
-                print("new_valid: ", target_piece.get_valid_moves($PieceManager.dark_piece_state, $PieceManager.light_piece_state).to_string())
-                print("dark state: ", $PieceManager.dark_piece_state.to_string())
-                print("\tmsb: ", $PieceManager.dark_piece_state.get_msb())
-                print("\tsta: %016x" % $PieceManager.dark_piece_state.get_board_state())
-                print("light state: ", $PieceManager.light_piece_state.to_string())
-                print("\tmsb: ", $PieceManager.light_piece_state.get_msb())
-                print("\tsta: %016x" % $PieceManager.light_piece_state.get_board_state())
         cur_index += 1
         valid_moves.shift_right()
 

@@ -76,6 +76,13 @@ func compute_piece_valid_moves(_new_rank, _new_file, _own_side_bitboard):
     #print("COMPUTE_PIECE_VALID_MOVES SHOULD NOT BE CALLED")
     pass
 
+# virtual method to be implemented by subclass
+func get_left_move_piece_board(): 
+    pass
+
+# virtual method to be implemented by subclass
+func get_right_move_piece_board(): 
+    pass
 
 func get_rank(): 
     return rank

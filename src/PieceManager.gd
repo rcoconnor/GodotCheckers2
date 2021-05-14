@@ -42,10 +42,31 @@ func move_pieces(from_rank, from_file, to_rank, to_file, is_white_piece):
     if is_white_piece: 
         var old_without_piece = BoardFunctions.LOGICAL_AND(light_piece_state, not_old_piece)
         var new_light_pieces = BoardFunctions.LOGICAL_OR(old_without_piece, new_piece)
+        if (from_rank - to_rank == 2): 
+            # there is a jump, so we should 
+            var victim_index: int = 0
+            if (from_file > to_file): 
+                # we need the value of the piece table for the place we are jumping
+                victim_index = (( from_rank - 1 ) * 8) + ( from_file - 1)
+            else: 
+                victim_index = (( from_rank - 1 ) * 8) + (from_file + 1)
+            var not_victim = BoardFunctions.LOGICAL_NOT(board_functions.PIECE_TABLE[victim_index])
+            var new_enemy_pieces = BoardFunctions.LOGICAL_AND(dark_piece_state, not_victim)
+            set_dark_piece_state(new_enemy_pieces)
+
         set_light_piece_state(new_light_pieces)
     else: 
         var old_without_piece = BoardFunctions.LOGICAL_AND(dark_piece_state, not_old_piece)
         var new_dark_pieces = BoardFunctions.LOGICAL_OR(old_without_piece, new_piece)
+        if(to_rank - from_rank == 2):
+            var victim_index: int = 0
+            if (from_file > to_file): 
+                victim_index = ((from_rank + 1) * 8) + (from_file - 1)
+            else: 
+                victim_index = ((from_rank + 1) * 8) + (from_file + 1)
+            var not_victim = BoardFunctions.LOGICAL_NOT(board_functions.PIECE_TABLE[victim_index])
+            var new_enemy_pieces = BoardFunctions.LOGICAL_AND(light_piece_state, not_victim)
+            set_light_piece_state(new_enemy_pieces)
         set_dark_piece_state(new_dark_pieces)
 
 # clears the board 
