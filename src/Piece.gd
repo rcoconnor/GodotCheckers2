@@ -39,8 +39,8 @@ func set_file(new_file):
     file = new_file
     var new_x = file * SPRITE_SIZE
     set_position(Vector2(new_x, position.y))
-    piece_index = (8 * rank) + file
-
+    var temp_val = (8 * rank)
+    piece_index = temp_val + file
 
 func set_rank(new_rank): 
     rank = new_rank
@@ -73,33 +73,7 @@ func get_valid_moves(_dark_pieces_bitboard, _light_pieces_bitboard):
     pass
 
 func compute_piece_valid_moves(_new_rank, _new_file, _own_side_bitboard): 
-#   print("COMPUTE_PIECE_VALID_MOVES SHOULD NOT BE CALLED")
-#   var piece_loc_bitboard = Bitboard.new()
-#   var new_msb = bitboardFunctions.PIECE_TABLE[piece_index].get_msb()
-#   var new_state = bitboardFunctions.PIECE_TABLE[piece_index].get_board_state()
-#   piece_loc_bitboard.set_state(new_msb, new_state)
-#   print("piece_loc_bitboard: ", piece_loc_bitboard.to_string())
-#   print("rank: ", rank)
-#   print("file: ", file)
-#   print("new_rank: ", new_rank)
-#   print("new_file: ", new_file)
-#   print("ownside: ", own_side_bitboard.to_string())
-#   print("piece_index: ", piece_index)
-    
-#   var piece_clip_file_h = BoardFunctions.LOGICAL_AND(piece_loc_bitboard, bitboardFunctions.CLEAR_FILE[7])
-#   var piece_clip_file_a = BoardFunctions.LOGICAL_AND(piece_loc_bitboard, bitboardFunctions.CLEAR_FILE[0])
-#   #print("clip h: ", piece_clip_file_h.to_string()) 
-#   var left_spot = BoardFunctions.multiple_shift_left(piece_clip_file_a, 7)
-#   #print("left  : ", left_spot.to_string()) 
-#   var right_spot = BoardFunctions.multiple_shift_left(piece_clip_file_h, 9)
-#   #print("right : ", right_spot.to_string())
-#   var possible_moves = BoardFunctions.LOGICAL_OR(left_spot, right_spot)
-#   #print("possib: ", possible_moves.to_string())
-#   var inverted_board = BoardFunctions.LOGICAL_NOT(own_side_bitboard)
-#   #print('inverted: ', inverted_board.to_string())
-#   var valid_moves = BoardFunctions.LOGICAL_AND(possible_moves, inverted_board)
-#   #print("valids: ", valid_moves.to_string())
-#   return valid_moves
+    #print("COMPUTE_PIECE_VALID_MOVES SHOULD NOT BE CALLED")
     pass
 
 
