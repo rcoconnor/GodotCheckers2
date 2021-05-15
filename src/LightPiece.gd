@@ -90,4 +90,7 @@ func get_right_move_piece_board():
     var pos_bitboard = bitboardFunctions.PIECE_TABLE[piece_index]
     var piece_clip_file_h = BoardFunctions.LOGICAL_AND(pos_bitboard, bitboardFunctions.CLEAR_FILE[7])
     var right_spot = BoardFunctions.multiple_shift_right(piece_clip_file_h, 7)
+    return right_spot
+
+
 

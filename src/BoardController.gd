@@ -8,6 +8,7 @@ const Piece = preload("res://src/Piece.gd")
 const LightPiece = preload("res://src/LightPiece.gd")
 const DarkPiece = preload("res://src/DarkPiece.gd")
 
+var KingPiece = preload("res://obj/DarkKingPiece.tscn")
 #var DarkSquare = preload("res://obj/DarkSquare.tscn") 
 #var LightSquare = preload("res://obj/LightSquare.tscn")
 
