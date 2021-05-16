@@ -28,9 +28,11 @@ signal refreshed_screen
 func _ready():
     board_functions = BoardFunctions.new()
     
-    dark_pawns.set_state(false, 0x000000000055AA55)
+    #dark_pawns.set_state(false, 0x000000000055AA55)
+    dark_pawns.set_state(false, 0x0050A00000000000)
     dark_kings.set_state(false, 0)
-    light_pawns.set_state(true, 0x2A55AA0000000000)
+    #light_pawns.set_state(true, 0x2A55AA0000000000)
+    light_pawns.set_state(false, 0x000000000000AA00)
     light_kings.set_state(false, 0)
 
     refresh_board()
@@ -72,9 +74,10 @@ func move_pieces(from_rank, from_file, to_rank, to_file, is_white_piece, is_king
 
             set_light_piece_state(light_pawns, new_light_pieces)
     else:
+        print("\n\ndark pawns init  : ", dark_pawns.to_string())
         if not is_king_piece: 
-            print("dark piece moving: ")
-            var old_without_piece = BoardFunctions.LOGICAL_AND(dark_piece_state, not_old_piece)
+            #print("dark piece moving: ")
+            var old_without_piece = BoardFunctions.LOGICAL_AND(dark_pawns, not_old_piece)
             var new_dark_pieces = BoardFunctions.LOGICAL_OR(old_without_piece, new_piece)
             if(to_rank - from_rank == 2):
                 var victim_index: int = 0
@@ -101,7 +104,7 @@ func move_pieces(from_rank, from_file, to_rank, to_file, is_white_piece, is_king
                 set_light_piece_state(new_enemy_pieces, light_kings)
             
             set_dark_piece_state(dark_pawns, new_dark_pieces)
-
+        print("dark pawns final : ", dark_pawns.to_string())
 
 # converts the piece indicated by piece_loc into a king
 # @param piece_loc - a bitboard with a set bit representing the position of the
@@ -116,12 +119,13 @@ func king_piece(piece_loc, is_white):
         light_kings = BoardFunctions.LOGICAL_OR(piece_loc, light_kings)
         light_piece_state = BoardFunctions.LOGICAL_OR(light_pawns, light_kings)
     else: 
-        print("kinging dark: ", piece_loc.to_string())
+        #print("kinging dark: ", piece_loc.to_string())
         print("dark pawns before: ", dark_pawns.to_string())
         dark_pawns = BoardFunctions.LOGICAL_AND(not_piece, dark_pawns)
-        print("dark pawns after: ", dark_pawns.to_string())
-        print("not piece: ", not_piece.to_string())
+        print("dark pawns after : ", dark_pawns.to_string())
+        #print("not piece: ", not_piece.to_string())
         dark_kings = BoardFunctions.LOGICAL_OR(piece_loc, dark_kings)
+        print("dark kings after : ", dark_kings.to_string())
         dark_piece_state = BoardFunctions.LOGICAL_OR(dark_pawns, dark_kings)
 
 # clears the board 
