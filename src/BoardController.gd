@@ -8,7 +8,7 @@ const Piece = preload("res://src/Piece.gd")
 const LightPiece = preload("res://src/LightPiece.gd")
 const DarkPiece = preload("res://src/DarkPiece.gd")
 
-var KingPiece = preload("res://obj/DarkKingPiece.tscn")
+var KingPiece = preload("res://src/KingPiece.gd")
 #var DarkSquare = preload("res://obj/DarkSquare.tscn") 
 #var LightSquare = preload("res://obj/LightSquare.tscn")
 
@@ -90,14 +90,19 @@ func selected_signal_received(square_rank, square_file):
             #move_to_show = valid_moves
             if(is_valid_move): 
                 if target_piece is LightPiece: 
-                    $PieceManager.move_pieces(target_piece.get_rank(), target_piece.get_file(), square_rank, square_file, true)
+                    $PieceManager.move_pieces(target_piece.get_rank(), target_piece.get_file(), square_rank, square_file, true, false)
                     has_target = false
                     $PieceManager.refresh_board()
                 elif target_piece is DarkPiece: 
-                    $PieceManager.move_pieces(target_piece.get_rank(), target_piece.get_file(), square_rank, square_file, false)
+                    $PieceManager.move_pieces(target_piece.get_rank(), target_piece.get_file(), square_rank, square_file, false, false)
                     #if(square_rank - target_piece.get_rank() == 2):
                         #print("this is also a jump")
                     has_target = false
+                    $PieceManager.refresh_board()
+                elif target_piece is KingPiece:
+                    print("valid king move selected")
+                    $PieceManager.move_pieces(target_piece.get_rank(), target_piece.get_file(), square_rank, square_file, target_piece.get_is_white(), true)
+                    has_target = false 
                     $PieceManager.refresh_board()
             # un-highlight all the valid moves 
             else:

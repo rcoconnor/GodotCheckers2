@@ -6,6 +6,7 @@ func compute_is_valid_move(new_rank, new_file, dark_pieces_bitboard, light_piece
     var shifted_piece_table = bitboardFunctions.PIECE_TABLE[new_index]
 
     var valid_moves = get_valid_moves(dark_pieces_bitboard, light_pieces_bitboard)
+    
     var is_valid = BoardFunctions.LOGICAL_AND(shifted_piece_table, valid_moves)
     is_valid = BoardFunctions.multiple_shift_right(is_valid, new_index)
     if(is_valid.get_board_state() == 1 && is_valid.get_msb() == false): 
@@ -39,6 +40,7 @@ func compute_king_valid_moves(own_side, enemy_side):
     print("valid moves: ", valid_moves.to_string())
     return valid_moves
 
-
+func get_is_white(): 
+    return is_white
 
 

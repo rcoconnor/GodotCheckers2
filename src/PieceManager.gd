@@ -40,7 +40,7 @@ func _process(_delta):
 
 
 
-func move_pieces(from_rank, from_file, to_rank, to_file, is_white_piece): 
+func move_pieces(from_rank, from_file, to_rank, to_file, is_white_piece, is_king_piece): 
     var new_index: int = ( to_rank * 8 ) + to_file
     var old_index: int = (from_rank * 8) + from_file
     
@@ -48,37 +48,51 @@ func move_pieces(from_rank, from_file, to_rank, to_file, is_white_piece):
     var new_piece = board_functions.PIECE_TABLE[new_index]
     
     if is_white_piece: 
-        var old_without_piece = BoardFunctions.LOGICAL_AND(light_piece_state, not_old_piece)
-        var new_light_pieces = BoardFunctions.LOGICAL_OR(old_without_piece, new_piece)
-        if (from_rank - to_rank == 2): 
-            # there is a jump, so we should 
-            var victim_index: int = 0
-            if (from_file > to_file): 
-                # we need the value of the piece table for the place we are jumping
-                victim_index = (( from_rank - 1 ) * 8) + ( from_file - 1)
-            else: 
-                victim_index = (( from_rank - 1 ) * 8) + (from_file + 1)
-            var not_victim = BoardFunctions.LOGICAL_NOT(board_functions.PIECE_TABLE[victim_index])
-            var new_enemy_pieces = BoardFunctions.LOGICAL_AND(dark_piece_state, not_victim)
-            set_dark_piece_state(new_enemy_pieces, dark_kings)
+        if not is_king_piece: 
+            var old_without_piece = BoardFunctions.LOGICAL_AND(light_piece_state, not_old_piece)
+            var new_light_pieces = BoardFunctions.LOGICAL_OR(old_without_piece, new_piece)
+            if (from_rank - to_rank == 2): 
+                # there is a jump, so we should 
+                var victim_index: int = 0
+                if (from_file > to_file): 
+                    # we need the value of the piece table for the place we are jumping
+                    victim_index = (( from_rank - 1 ) * 8) + ( from_file - 1)
+                else: 
+                    victim_index = (( from_rank - 1 ) * 8) + (from_file + 1)
+                var not_victim = BoardFunctions.LOGICAL_NOT(board_functions.PIECE_TABLE[victim_index])
+                var new_enemy_pieces = BoardFunctions.LOGICAL_AND(dark_piece_state, not_victim)
+                set_dark_piece_state(new_enemy_pieces, dark_kings)
 
-        if to_rank == 0: print("there should be a king now")
-        set_light_piece_state(new_light_pieces, light_kings)
+            if to_rank == 0: print("there should be a king now")
+            set_light_piece_state(new_light_pieces, light_kings)
+        else: # it is a king piece 
+            var old_without_piece = BoardFunctions.LOGICAL_AND(light_kings, not_old_piece)
+            var new_light_pieces = BoardFunctions.LOGICAL_OR(old_without_piece, new_piece)
+            # FIXME: handle jumping 
+
+            set_light_piece_state(light_pawns, new_light_pieces)
     else:
-        print("dark piece moving: ")
-        var old_without_piece = BoardFunctions.LOGICAL_AND(dark_piece_state, not_old_piece)
-        var new_dark_pieces = BoardFunctions.LOGICAL_OR(old_without_piece, new_piece)
-        if(to_rank - from_rank == 2):
-            var victim_index: int = 0
-            if (from_file > to_file): 
-                victim_index = ((from_rank + 1) * 8) + (from_file - 1)
-            else: 
-                victim_index = ((from_rank + 1) * 8) + (from_file + 1)
-            var not_victim = BoardFunctions.LOGICAL_NOT(board_functions.PIECE_TABLE[victim_index])
-            var new_enemy_pieces = BoardFunctions.LOGICAL_AND(light_piece_state, not_victim)
-            set_light_piece_state(new_enemy_pieces, light_kings)
-        set_dark_piece_state(new_dark_pieces, dark_kings)
-        if to_rank == 7: king_piece(new_piece, false)
+        if not is_king_piece: 
+            print("dark piece moving: ")
+            var old_without_piece = BoardFunctions.LOGICAL_AND(dark_piece_state, not_old_piece)
+            var new_dark_pieces = BoardFunctions.LOGICAL_OR(old_without_piece, new_piece)
+            if(to_rank - from_rank == 2):
+                var victim_index: int = 0
+                if (from_file > to_file): 
+                    victim_index = ((from_rank + 1) * 8) + (from_file - 1)
+                else: 
+                    victim_index = ((from_rank + 1) * 8) + (from_file + 1)
+                var not_victim = BoardFunctions.LOGICAL_NOT(board_functions.PIECE_TABLE[victim_index])
+                var new_enemy_pieces = BoardFunctions.LOGICAL_AND(light_piece_state, not_victim)
+                set_light_piece_state(new_enemy_pieces, light_kings)
+            set_dark_piece_state(new_dark_pieces, dark_kings)
+            if to_rank == 7: king_piece(new_piece, false)
+        else: # it is a king piece 
+            var old_without_piece  = BoardFunctions.LOGICAL_AND(light_kings, not_old_piece)
+            var new_dark_pieces = BoardFunctions.LOGICAL_OR(old_without_piece, new_piece)
+
+            set_dark_piece_state(dark_pawns, new_dark_pieces)
+
 
 # converts the piece indicated by piece_loc into a king
 # @param piece_loc - a bitboard with a set bit representing the position of the
