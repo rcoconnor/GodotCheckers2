@@ -8,6 +8,8 @@ var board_functions
 export(PackedScene) var LightPiece
 export(PackedScene) var DarkPiece
 export(PackedScene) var DarkKing
+export(PackedScene) var LightKing
+
 var dark_piece_state = Bitboard.new()
 var light_piece_state = Bitboard.new()
 
@@ -28,11 +30,11 @@ signal refreshed_screen
 func _ready():
     board_functions = BoardFunctions.new()
     
-    #dark_pawns.set_state(false, 0x000000000055AA55)
-    dark_pawns.set_state(false, 0x0050A00000000000)
+    dark_pawns.set_state(false, 0x000000000055AA55)
+    #dark_pawns.set_state(false, 0x0050A00000000000)
     dark_kings.set_state(false, 0)
-    #light_pawns.set_state(true, 0x2A55AA0000000000)
-    light_pawns.set_state(false, 0x000000000000AA00)
+    light_pawns.set_state(true, 0x2A55AA0000000000)
+    #light_pawns.set_state(false, 0x000000000000AA00)
     light_kings.set_state(false, 0)
 
     refresh_board()
@@ -51,7 +53,7 @@ func move_pieces(from_rank, from_file, to_rank, to_file, is_white_piece, is_king
     
     if is_white_piece: 
         if not is_king_piece: 
-            var old_without_piece = BoardFunctions.LOGICAL_AND(light_piece_state, not_old_piece)
+            var old_without_piece = BoardFunctions.LOGICAL_AND(light_pawns, not_old_piece)
             var new_light_pieces = BoardFunctions.LOGICAL_OR(old_without_piece, new_piece)
             if (from_rank - to_rank == 2): 
                 # there is a jump, so we should 
@@ -62,16 +64,26 @@ func move_pieces(from_rank, from_file, to_rank, to_file, is_white_piece, is_king
                 else: 
                     victim_index = (( from_rank - 1 ) * 8) + (from_file + 1)
                 var not_victim = BoardFunctions.LOGICAL_NOT(board_functions.PIECE_TABLE[victim_index])
-                var new_enemy_pieces = BoardFunctions.LOGICAL_AND(dark_piece_state, not_victim)
-                set_dark_piece_state(new_enemy_pieces, dark_kings)
+                var new_enemy_pawns = BoardFunctions.LOGICAL_AND(dark_pawns, not_victim)
+                var new_enemy_kings = BoardFunctions.LOGICAL_AND(dark_kings, not_victim)
+                set_dark_piece_state(new_enemy_pawns, new_enemy_kings)
 
-            if to_rank == 0: print("there should be a king now")
             set_light_piece_state(new_light_pieces, light_kings)
+            if to_rank == 0: king_piece(new_piece, true)
         else: # it is a king piece 
             var old_without_piece = BoardFunctions.LOGICAL_AND(light_kings, not_old_piece)
             var new_light_pieces = BoardFunctions.LOGICAL_OR(old_without_piece, new_piece)
             # FIXME: handle jumping 
+            if (to_rank - from_rank == 2) or (from_rank - to_rank == 2): 
+                var victim_index: int = 0
+                var victim_rank: int = (from_rank + to_rank) / 2
+                var victim_file: int = (from_file + to_file) / 2
+                victim_index = (victim_rank * 8) + victim_file
+                var not_victim = BoardFunctions.LOGICAL_NOT(board_functions.PIECE_TABLE[victim_index])
+                var new_enemy_pawns = BoardFunctions.LOGICAL_AND(dark_pawns, not_victim)
+                var new_enemy_kings = BoardFunctions.LOGICAL_AND(dark_kings, not_victim)
 
+                set_dark_piece_state(new_enemy_pawns, new_enemy_kings)
             set_light_piece_state(light_pawns, new_light_pieces)
     else:
         print("\n\ndark pawns init  : ", dark_pawns.to_string())
@@ -86,8 +98,9 @@ func move_pieces(from_rank, from_file, to_rank, to_file, is_white_piece, is_king
                 else: 
                     victim_index = ((from_rank + 1) * 8) + (from_file + 1)
                 var not_victim = BoardFunctions.LOGICAL_NOT(board_functions.PIECE_TABLE[victim_index])
-                var new_enemy_pieces = BoardFunctions.LOGICAL_AND(light_piece_state, not_victim)
-                set_light_piece_state(new_enemy_pieces, light_kings)
+                var new_enemy_pawns = BoardFunctions.LOGICAL_AND(light_pawns, not_victim)
+                var new_enemy_kings = BoardFunctions.LOGICAL_AND(light_kings, not_victim)
+                set_light_piece_state(new_enemy_pawns, new_enemy_kings)
             set_dark_piece_state(new_dark_pieces, dark_kings)
             if to_rank == 7: king_piece(new_piece, false)
         else: # it is a king piece 
@@ -100,8 +113,9 @@ func move_pieces(from_rank, from_file, to_rank, to_file, is_white_piece, is_king
                 var victim_file: int = (from_file + to_file) / 2
                 victim_index = ( victim_rank * 8 ) + victim_file
                 var not_victim = BoardFunctions.LOGICAL_NOT(board_functions.PIECE_TABLE[victim_index])
-                var new_enemy_pieces = BoardFunctions.LOGICAL_AND(light_piece_state, not_victim)
-                set_light_piece_state(new_enemy_pieces, light_kings)
+                var new_enemy_pawns = BoardFunctions.LOGICAL_AND(light_pawns, not_victim)
+                var new_enemy_kings = BoardFunctions.LOGICAL_AND(light_kings, not_victim)
+                set_light_piece_state(new_enemy_pawns, new_enemy_kings)
             
             set_dark_piece_state(dark_pawns, new_dark_pieces)
         print("dark pawns final : ", dark_pawns.to_string())
@@ -114,7 +128,6 @@ func move_pieces(from_rank, from_file, to_rank, to_file, is_white_piece, is_king
 func king_piece(piece_loc, is_white): 
     var not_piece = BoardFunctions.LOGICAL_NOT(piece_loc)
     if (is_white): 
-        print("kinging light")
         light_pawns = BoardFunctions.LOGICAL_AND(not_piece, light_pawns)
         light_kings = BoardFunctions.LOGICAL_OR(piece_loc, light_kings)
         light_piece_state = BoardFunctions.LOGICAL_OR(light_pawns, light_kings)
@@ -143,6 +156,7 @@ func refresh_board():
     instance_pieces(DarkPiece, dark_pawns)
     instance_pieces(LightPiece, light_pawns)
     instance_pieces(DarkKing, dark_kings)
+    instance_pieces(LightKing, light_kings)
     emit_signal("refreshed_screen") 
 
 
