@@ -91,7 +91,7 @@ func move_pieces(from_rank, from_file, to_rank, to_file, is_white_piece, is_king
             set_dark_piece_state(new_dark_pieces, dark_kings)
             if to_rank == 7: king_piece(new_piece, false)
         else: # it is a king piece 
-            var old_without_piece  = BoardFunctions.LOGICAL_AND(light_kings, not_old_piece)
+            var old_without_piece  = BoardFunctions.LOGICAL_AND(dark_kings, not_old_piece)
             var new_dark_pieces = BoardFunctions.LOGICAL_OR(old_without_piece, new_piece)
             # FIXME: handle jumping 
             if(to_rank - from_rank == 2) or (from_rank - to_rank == 2): 
