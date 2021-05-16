@@ -69,11 +69,13 @@ func handle_jumping(pos_bitboard, enemy_bitboard):
     if is_left.get_lsb() == 1:
         piece_clip_file_a = BoardFunctions.LOGICAL_AND(piece_clip_file_a, bitboardFunctions.CLEAR_FILE[1])
         left_spot = BoardFunctions.multiple_shift_right(piece_clip_file_a, 18)
+        #FIXME: I don't think these temp variables are necessary and may actually introduce a bug
         var temp = BoardFunctions.LOGICAL_OR(is_left, left_spot)
         val_to_return = BoardFunctions.LOGICAL_OR(temp, val_to_return)
     if is_right.get_lsb() == 1: 
         piece_clip_file_h = BoardFunctions.LOGICAL_AND(piece_clip_file_h, bitboardFunctions.CLEAR_FILE[6])
         right_spot = BoardFunctions.multiple_shift_right(piece_clip_file_h, 14)
+        #FIXME: ensure the temp variables are necessary 
         var temp = BoardFunctions.LOGICAL_OR(is_right, right_spot)
         val_to_return = BoardFunctions.LOGICAL_OR(temp, val_to_return)
 

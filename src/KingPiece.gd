@@ -31,6 +31,10 @@ func compute_king_valid_moves(own_side, enemy_side):
     var possible_moves = BoardFunctions.LOGICAL_OR(top_left, top_right)
     possible_moves = BoardFunctions.LOGICAL_OR(possible_moves, bot_right)
     possible_moves = BoardFunctions.LOGICAL_OR(possible_moves, bot_left)
+    
+    # FIXME: handle jumping  
+    var jump_bitboard = handle_jumping(piece_loc_bitboard, enemy_side)
+    possible_moves = BoardFunctions.LOGICAL_OR(possible_moves, jump_bitboard)
 
     var inverted_board = BoardFunctions.LOGICAL_NOT(own_side)
     var inverted_enemy = BoardFunctions.LOGICAL_NOT(enemy_side)
@@ -42,5 +46,47 @@ func compute_king_valid_moves(own_side, enemy_side):
 
 func get_is_white(): 
     return is_white
+
+
+func handle_jumping(pos_bitboard, enemy_bitboard): 
+    var piece_clip_file_h = BoardFunctions.LOGICAL_AND(pos_bitboard, bitboardFunctions.CLEAR_FILE[7])
+    var piece_clip_file_a = BoardFunctions.LOGICAL_AND(pos_bitboard, bitboardFunctions.CLEAR_FILE[0])
+
+    var val_to_return = Bitboard.new()
+    val_to_return.set_state(false, 0)
+
+    var top_left = BoardFunctions.multiple_shift_left(piece_clip_file_a, 7)
+    var bot_left = BoardFunctions.multiple_shift_right(piece_clip_file_a, 9)
+    var top_right = BoardFunctions.multiple_shift_left(piece_clip_file_h, 9)
+    var bot_right = BoardFunctions.multiple_shift_right(piece_clip_file_h, 7)
+
+    var is_top_left = BoardFunctions.LOGICAL_AND(enemy_bitboard, top_left)
+    var is_bot_left = BoardFunctions.LOGICAL_AND(enemy_bitboard, bot_left)
+    var is_top_right = BoardFunctions.LOGICAL_AND(enemy_bitboard, top_right)
+    var is_bot_right = BoardFunctions.LOGICAL_AND(enemy_bitboard, bot_right)
+
+    is_top_left = BoardFunctions.multiple_shift_right(is_top_left, 7 + piece_index)
+    is_bot_left = BoardFunctions.multiple_shift_right(is_bot_left, piece_index - 9)
+    is_top_right = BoardFunctions.multiple_shift_right(is_top_right, 9 + piece_index)
+    is_bot_right = BoardFunctions.multiple_shift_right(is_bot_left, piece_index - 7)
+
+
+    if is_top_left.get_lsb() == 1: 
+        piece_clip_file_a = BoardFunctions.LOGICAL_AND(piece_clip_file_a, bitboardFunctions.CLEAR_FILE[1])
+        top_left = BoardFunctions.multiple_shift_left(piece_clip_file_a, 14)
+        val_to_return = BoardFunctions.LOGICAL_OR(top_left, val_to_return)
+    if is_top_right.get_lsb() == 1: 
+        piece_clip_file_h = BoardFunctions.LOGICAL_AND(piece_clip_file_h, bitboardFunctions.CLEAR_FILE[6])
+        top_right = BoardFunctions.multiple_shift_left(piece_clip_file_h, 18)
+        val_to_return = BoardFunctions.LOGICAL_OR(top_right, val_to_return)
+    if is_bot_left.get_lsb() == 1: 
+        piece_clip_file_a = BoardFunctions.LOGICAL_AND(piece_clip_file_a, bitboardFunctions.CLEAR_FILE[1])
+        bot_left = BoardFunctions.multiple_shift_right(piece_clip_file_a, 18)
+        val_to_return = BoardFunctions.LOGICAL_OR(bot_left, val_to_return)
+    if is_bot_right.get_lsb() == 1:
+        piece_clip_file_h = BoardFunctions.LOGICAL_AND(piece_clip_file_h, bitboardFunctions.CLEAR_FILE[6])
+        bot_right = BoardFunctions.mutliple_shift_right(piece_clip_file_h, 14)
+        val_to_return = BoardFunctions.LOGICAL_OR(bot_right, val_to_return)
+    return val_to_return 
 
 
