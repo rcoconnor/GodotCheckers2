@@ -68,7 +68,7 @@ func handle_jumping(pos_bitboard, enemy_bitboard):
     is_top_left = BoardFunctions.multiple_shift_right(is_top_left, 7 + piece_index)
     is_bot_left = BoardFunctions.multiple_shift_right(is_bot_left, piece_index - 9)
     is_top_right = BoardFunctions.multiple_shift_right(is_top_right, 9 + piece_index)
-    is_bot_right = BoardFunctions.multiple_shift_right(is_bot_left, piece_index - 7)
+    is_bot_right = BoardFunctions.multiple_shift_right(is_bot_right, piece_index - 7)
 
 
     if is_top_left.get_lsb() == 1: 
@@ -85,7 +85,7 @@ func handle_jumping(pos_bitboard, enemy_bitboard):
         val_to_return = BoardFunctions.LOGICAL_OR(bot_left, val_to_return)
     if is_bot_right.get_lsb() == 1:
         piece_clip_file_h = BoardFunctions.LOGICAL_AND(piece_clip_file_h, bitboardFunctions.CLEAR_FILE[6])
-        bot_right = BoardFunctions.mutliple_shift_right(piece_clip_file_h, 14)
+        bot_right = BoardFunctions.multiple_shift_right(piece_clip_file_h, 14)
         val_to_return = BoardFunctions.LOGICAL_OR(bot_right, val_to_return)
     return val_to_return 
 
