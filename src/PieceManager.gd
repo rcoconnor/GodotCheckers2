@@ -90,7 +90,16 @@ func move_pieces(from_rank, from_file, to_rank, to_file, is_white_piece, is_king
         else: # it is a king piece 
             var old_without_piece  = BoardFunctions.LOGICAL_AND(light_kings, not_old_piece)
             var new_dark_pieces = BoardFunctions.LOGICAL_OR(old_without_piece, new_piece)
-
+            # FIXME: handle jumping 
+            if(to_rank - from_rank == 2) or (from_rank - to_rank == 2): 
+                var victim_index: int = 0
+                var victim_rank: int = (from_rank + to_rank) / 2
+                var victim_file: int = (from_file + to_file) / 2
+                victim_index = ( victim_rank * 8 ) + victim_file
+                var not_victim = BoardFunctions.LOGICAL_NOT(board_functions.PIECE_TABLE[victim_index])
+                var new_enemy_pieces = BoardFunctions.LOGICAL_AND(light_piece_state, not_victim)
+                set_light_piece_state(new_enemy_pieces, light_kings)
+            
             set_dark_piece_state(dark_pawns, new_dark_pieces)
 
 
