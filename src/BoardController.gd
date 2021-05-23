@@ -27,6 +27,8 @@ var should_move = false
 var board_functions
 var index = 0
 
+var is_current_turn_white: bool
+
 #var move_to_show = null
 
 # Called when the node enters the scene tree for the first time.
@@ -36,6 +38,7 @@ func _ready():
     board_functions = BoardFunctions.new()
     print("BoardController: ", board_functions.CLEAR_RANK[1].to_string())
     has_target = false
+    is_current_turn_white = false
     for each_child in $GameBoard.get_children(): 
         if each_child is ClickableSprite: 
             each_child.connect("selected", self, "selected_signal_received")
@@ -67,10 +70,11 @@ func _input(event):
 # node: the node of the piece which has been selected 
 func select_piece_received(node):
     if (has_target == false): 
-        original_pos = node.global_position
-        has_target = true
-        target_piece = node
-        highlight_valid_moves()        
+        if is_current_turn_white ==  node.get_is_white():
+            original_pos = node.global_position
+            has_target = true
+            target_piece = node
+            highlight_valid_moves()        
 
 
 func _on_pieces_refreshed_screen(): 
@@ -109,6 +113,8 @@ func selected_signal_received(square_rank, square_file):
                 has_target = false
                 $PieceManager.refresh_board()
             clear_valid_moves()
+            is_current_turn_white = ( not is_current_turn_white )
+            print("is_whites_turn: ", is_current_turn_white)
 
 #const SQUARE_SIZE = 32
 

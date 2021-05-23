@@ -18,10 +18,16 @@ _global_script_classes=[ {
 "class": "ClickableSprite",
 "language": "GDScript",
 "path": "res://src/ClickableSprite.gd"
+}, {
+"base": "EditorScript",
+"class": "ReferenceCollector",
+"language": "GDScript",
+"path": "res://src/ReferenceCollector.gd"
 } ]
 _global_script_class_icons={
 "Bitboard": "",
-"ClickableSprite": ""
+"ClickableSprite": "",
+"ReferenceCollector": ""
 }
 
 [application]

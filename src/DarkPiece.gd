@@ -19,6 +19,9 @@ func compute_is_valid_move(new_rank, new_file, dark_pieces_bitboard, light_piece
     return false 
 
 
+func get_is_white(): 
+    return false
+
 # Public Inherited method, returns all valid moves 
 func get_valid_moves(dark_pieces_bitboard, light_pieces_bitboard): 
     return compute_dark_piece_valid_moves(dark_pieces_bitboard, light_pieces_bitboard)

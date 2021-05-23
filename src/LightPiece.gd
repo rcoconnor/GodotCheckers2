@@ -94,5 +94,7 @@ func get_right_move_piece_board():
     var right_spot = BoardFunctions.multiple_shift_right(piece_clip_file_h, 7)
     return right_spot
 
+func get_is_white(): 
+    return true
 
 

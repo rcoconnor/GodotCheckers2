@@ -18,7 +18,6 @@ var file
 var piece_index # the index of the square within the PIECE_TABLE dictionary
 
 
-
 # Called when the node enters the scene tree for the first time.
 func _ready():
     rank = 0
@@ -91,6 +90,10 @@ func get_rank():
 func get_file():
     return file
 #return (7 - (position.y / SPRITE_SIZE))
+
+func get_is_white(): 
+    # virtual function to be implemented by subclass
+    pass 
 
 func _input(event): 
     if event.is_action_pressed("Left Click"):
