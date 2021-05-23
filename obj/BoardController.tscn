@@ -5,10 +5,15 @@
 [ext_resource path="res://obj/PieceManager.tscn" type="PackedScene" id=3]
 
 [node name="BoardController" type="Node2D"]
-position = Vector2( 94.2793, 62.1386 )
+position = Vector2( 208, 62 )
 script = ExtResource( 1 )
+__meta__ = {
+"_edit_horizontal_guides_": [  ],
+"_edit_vertical_guides_": [ 62.9465 ]
+}
 
 [node name="GameBoard" parent="." instance=ExtResource( 2 )]
 
 [node name="PieceManager" parent="." instance=ExtResource( 3 )]
+
 [connection signal="refreshed_screen" from="PieceManager" to="." method="_on_pieces_refreshed_screen"]

@@ -19,7 +19,6 @@ func get_valid_moves(dark_pieces_bitboard, light_pieces_bitboard):
 
 
 func compute_king_valid_moves(own_side, enemy_side): 
-    print("computing king, is_white:", is_white)
     var piece_loc_bitboard = BoardFunctions.copy_bitboard(bitboardFunctions.PIECE_TABLE[piece_index])
     var piece_clip_file_h = BoardFunctions.LOGICAL_AND(piece_loc_bitboard, bitboardFunctions.CLEAR_FILE[7])
     var piece_clip_file_a = BoardFunctions.LOGICAL_AND(piece_loc_bitboard, bitboardFunctions.CLEAR_FILE[0]) 
@@ -41,7 +40,6 @@ func compute_king_valid_moves(own_side, enemy_side):
 
     var temp_valid_moves = BoardFunctions.LOGICAL_AND(possible_moves, inverted_board)
     var valid_moves = BoardFunctions.LOGICAL_AND(temp_valid_moves, inverted_enemy)
-    print("valid moves: ", valid_moves.to_string())
     return valid_moves
 
 func get_is_white(): 

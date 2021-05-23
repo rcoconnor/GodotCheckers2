@@ -36,7 +36,6 @@ func _ready():
     #var lookup = Lookup.new()
     #print("looup: ", lookup.CLEAR_RANK[0].to_string())
     board_functions = BoardFunctions.new()
-    print("BoardController: ", board_functions.CLEAR_RANK[1].to_string())
     has_target = false
     is_current_turn_white = false
     for each_child in $GameBoard.get_children(): 
@@ -105,7 +104,6 @@ func selected_signal_received(square_rank, square_file):
                     has_target = false
                     $PieceManager.refresh_board()
                 elif target_piece is KingPiece:
-                    print("valid king move selected")
                     $PieceManager.move_pieces(target_piece.get_rank(), target_piece.get_file(), square_rank, square_file, target_piece.get_is_white(), true)
                     has_target = false 
                     $PieceManager.refresh_board()
@@ -114,7 +112,6 @@ func selected_signal_received(square_rank, square_file):
                 has_target = false
                 $PieceManager.refresh_board()
             clear_valid_moves()
-            print("is_whites_turn: ", is_current_turn_white)
 
 #const SQUARE_SIZE = 32
 

@@ -24,7 +24,6 @@ func _ready():
     file = 0
     piece_index = 0
     bitboardFunctions = BoardFunctions.new()
-    #print("pice_table: ", bitboardFunctions.PIECE_TABLE[27].to_string())
 
 export(int) var speed = 500
 
