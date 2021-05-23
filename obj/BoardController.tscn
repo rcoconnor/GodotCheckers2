@@ -16,4 +16,5 @@ __meta__ = {
 
 [node name="PieceManager" parent="." instance=ExtResource( 3 )]
 
+[connection signal="jumped" from="PieceManager" to="." method="jumped_signal_received"]
 [connection signal="refreshed_screen" from="PieceManager" to="." method="_on_pieces_refreshed_screen"]

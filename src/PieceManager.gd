@@ -26,6 +26,7 @@ var pieces_array = Array()
 const SPRITE_SIZE = 32
 
 signal refreshed_screen
+signal jumped(target_piece)
 
 func _ready():
     board_functions = BoardFunctions.new()
@@ -44,13 +45,15 @@ func _process(_delta):
 
 
 
-func move_pieces(from_rank, from_file, to_rank, to_file, is_white_piece, is_king_piece): 
+func move_pieces(from_rank, from_file, to_rank, to_file, is_white_piece, is_king_piece, target_piece): 
     var new_index: int = ( to_rank * 8 ) + to_file
     var old_index: int = (from_rank * 8) + from_file
     
+
     var not_old_piece = BoardFunctions.LOGICAL_NOT(board_functions.PIECE_TABLE[old_index])
     var new_piece = board_functions.PIECE_TABLE[new_index]
     
+    var did_jump: bool = false
     if is_white_piece: 
         if not is_king_piece: 
             var old_without_piece = BoardFunctions.LOGICAL_AND(light_pawns, not_old_piece)
@@ -67,7 +70,7 @@ func move_pieces(from_rank, from_file, to_rank, to_file, is_white_piece, is_king
                 var new_enemy_pawns = BoardFunctions.LOGICAL_AND(dark_pawns, not_victim)
                 var new_enemy_kings = BoardFunctions.LOGICAL_AND(dark_kings, not_victim)
                 set_dark_piece_state(new_enemy_pawns, new_enemy_kings)
-
+                did_jump = true
             set_light_piece_state(new_light_pieces, light_kings)
             if to_rank == 0: king_piece(new_piece, true)
         else: # it is a king piece 
@@ -84,6 +87,7 @@ func move_pieces(from_rank, from_file, to_rank, to_file, is_white_piece, is_king
                 var new_enemy_kings = BoardFunctions.LOGICAL_AND(dark_kings, not_victim)
 
                 set_dark_piece_state(new_enemy_pawns, new_enemy_kings)
+                did_jump = true
             set_light_piece_state(light_pawns, new_light_pieces)
     else:
         if not is_king_piece: 
@@ -100,6 +104,7 @@ func move_pieces(from_rank, from_file, to_rank, to_file, is_white_piece, is_king
                 var new_enemy_pawns = BoardFunctions.LOGICAL_AND(light_pawns, not_victim)
                 var new_enemy_kings = BoardFunctions.LOGICAL_AND(light_kings, not_victim)
                 set_light_piece_state(new_enemy_pawns, new_enemy_kings)
+                did_jump = true
             set_dark_piece_state(new_dark_pieces, dark_kings)
             if to_rank == 7: king_piece(new_piece, false)
         else: # it is a king piece 
@@ -115,8 +120,11 @@ func move_pieces(from_rank, from_file, to_rank, to_file, is_white_piece, is_king
                 var new_enemy_pawns = BoardFunctions.LOGICAL_AND(light_pawns, not_victim)
                 var new_enemy_kings = BoardFunctions.LOGICAL_AND(light_kings, not_victim)
                 set_light_piece_state(new_enemy_pawns, new_enemy_kings)
-            
+                did_jump = true 
             set_dark_piece_state(dark_pawns, new_dark_pieces)
+    if did_jump: 
+        emit_signal("jumped", new_piece)
+    
 
 # converts the piece indicated by piece_loc into a king
 # @param piece_loc - a bitboard with a set bit representing the position of the
@@ -185,7 +193,5 @@ func set_light_piece_state(new_pawn_state, new_king_state):
 
 func get_light_piece_state(): 
     return light_piece_state
-
-
 
 

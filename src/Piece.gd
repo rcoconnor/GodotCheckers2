@@ -90,6 +90,10 @@ func get_file():
     return file
 #return (7 - (position.y / SPRITE_SIZE))
 
+
+func get_piece_index(): 
+    return piece_index
+
 func get_is_white(): 
     # virtual function to be implemented by subclass
     pass 

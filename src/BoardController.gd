@@ -19,7 +19,11 @@ export(PackedScene) var HighLightSquare
 #var DarkPiece = preload("res://obj/DarkPiece.tscn") 
 #var LightPiece = preload("res://obj/LightPiece.tscn") 
 
-var target_piece = Node2D  
+var target_piece = Node2D 
+
+var old_target_piece_loc = Bitboard
+var should_check_for_double_jump = false
+
 var has_target = false
 var original_pos = Vector2()
 var should_move = false
@@ -44,6 +48,11 @@ func _ready():
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(_delta):
+    if(should_check_for_double_jump == true): 
+        #print("should check now")
+        #print("has target: ", has_target)
+        should_check_for_double_jump = false
+        #check_double_jump()
     if(has_target): 
         var mouse_pos = get_viewport().get_mouse_position()
         target_piece.set_new_global_pos(mouse_pos)
@@ -69,11 +78,11 @@ func _input(event):
 # node: the node of the piece which has been selected 
 func select_piece_received(node):
     if (has_target == false): 
-        if is_current_turn_white ==  node.get_is_white():
-            original_pos = node.global_position
-            has_target = true
-            target_piece = node
-            highlight_valid_moves()        
+        #if is_current_turn_white ==  node.get_is_white():
+        original_pos = node.global_position
+        has_target = true
+        target_piece = node
+        highlight_valid_moves()        
 
 
 func _on_pieces_refreshed_screen(): 
@@ -92,19 +101,19 @@ func selected_signal_received(square_rank, square_file):
             var is_valid_move = target_piece.compute_is_valid_move(square_rank, square_file, $PieceManager.get_dark_piece_state(), $PieceManager.get_light_piece_state())
             #move_to_show = valid_moves
             if(is_valid_move): 
-                is_current_turn_white = ( not is_current_turn_white )
+                #is_current_turn_white = ( not is_current_turn_white )
                 if target_piece is LightPiece: 
-                    $PieceManager.move_pieces(target_piece.get_rank(), target_piece.get_file(), square_rank, square_file, true, false)
+                    $PieceManager.move_pieces(target_piece.get_rank(), target_piece.get_file(), square_rank, square_file, true, false, target_piece)
                     has_target = false
                     $PieceManager.refresh_board()
                 elif target_piece is DarkPiece: 
-                    $PieceManager.move_pieces(target_piece.get_rank(), target_piece.get_file(), square_rank, square_file, false, false)
+                    $PieceManager.move_pieces(target_piece.get_rank(), target_piece.get_file(), square_rank, square_file, false, false, target_piece)
                     #if(square_rank - target_piece.get_rank() == 2):
                         #print("this is also a jump")
                     has_target = false
                     $PieceManager.refresh_board()
                 elif target_piece is KingPiece:
-                    $PieceManager.move_pieces(target_piece.get_rank(), target_piece.get_file(), square_rank, square_file, target_piece.get_is_white(), true)
+                    $PieceManager.move_pieces(target_piece.get_rank(), target_piece.get_file(), square_rank, square_file, target_piece.get_is_white(), true, target_piece)
                     has_target = false 
                     $PieceManager.refresh_board()
             # un-highlight all the valid moves 
@@ -140,6 +149,32 @@ func clear_valid_moves():
             each_child.un_highlight_square()
 
 
+func jumped_signal_received(_target_piece_bitboard): 
+    old_target_piece_loc = _target_piece_bitboard
+    should_check_for_double_jump = true
+
+
+func _check_double_jump():
+    for each_piece in $PieceManager.get_children():
+        var index: int = each_piece.get_piece_index()
+        var val_to_compare = board_functions.PIECE_TABLE[index]
+        if(val_to_compare.get_board_state() == old_target_piece_loc.get_board_state()):
+            if(val_to_compare.get_msb() == old_target_piece_loc.get_msb()):
+                # we have found the piece which  we want, now we shall move it 
+                var valid_moves = each_piece.get_valid_moves()
+                
+                # get the pieces to mask them out 
+               #var piece_loc_bitboard = BoardFunctions.copy_bitboard(bitboardFunctions.PIECE_TABLE[piece_index])
+               #var piece_clip_file_h = BoardFunctions.LOGICAL_AND(piece_loc_bitboard, bitboardFunctions.CLEAR_FILE[7])
+               #var piece_clip_file_a = BoardFunctions.LOGICAL_AND(piece_loc_bitboard, bitboardFunctions.CLEAR_FILE[0]) 
+
+               #var top_left = BoardFunctions.multiple_shift_left(piece_clip_file_a, 7)
+               #var bot_left = BoardFunctions.multiple_shift_right(piece_clip_file_a, 9)
+               #var top_right = BoardFunctions.multiple_shift_left(piece_clip_file_h, 9)
+               #var bot_right = BoardFunctions.multiple_shift_right(piece_clip_file_h, 7)
+               #var possible_moves = BoardFunctions.LOGICAL_OR(top_left, top_right)
+               #possible_moves = BoardFunctions.LOGICAL_OR(possible_moves, bot_right)
+               #possible_moves = BoardFunctions.LOGICAL_OR(possible_moves, bot_left)
 
 
 # ONLY USED TO CREATE THE BOARD
