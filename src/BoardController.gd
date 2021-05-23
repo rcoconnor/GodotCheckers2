@@ -93,6 +93,7 @@ func selected_signal_received(square_rank, square_file):
             var is_valid_move = target_piece.compute_is_valid_move(square_rank, square_file, $PieceManager.get_dark_piece_state(), $PieceManager.get_light_piece_state())
             #move_to_show = valid_moves
             if(is_valid_move): 
+                is_current_turn_white = ( not is_current_turn_white )
                 if target_piece is LightPiece: 
                     $PieceManager.move_pieces(target_piece.get_rank(), target_piece.get_file(), square_rank, square_file, true, false)
                     has_target = false
@@ -113,7 +114,6 @@ func selected_signal_received(square_rank, square_file):
                 has_target = false
                 $PieceManager.refresh_board()
             clear_valid_moves()
-            is_current_turn_white = ( not is_current_turn_white )
             print("is_whites_turn: ", is_current_turn_white)
 
 #const SQUARE_SIZE = 32
